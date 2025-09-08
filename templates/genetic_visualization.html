@@ -70,229 +70,6 @@
             padding: 25px;
         }
         
-        .meal-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-        
-        .meal-card {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-        
-        .meal-card:hover {
-            background: #e3f2fd;
-            border-color: #4facfe;
-            transform: translateY(-2px);
-        }
-        
-        .meal-card h4 {
-            margin: 0 0 10px 0;
-            color: #333;
-            font-size: 1.1em;
-        }
-        
-        .meal-card .calories {
-            font-weight: bold;
-            color: #4facfe;
-            font-size: 1.2em;
-        }
-        
-        .meal-card .macros {
-            font-size: 0.9em;
-            color: #666;
-            margin-top: 5px;
-        }
-        
-        .plan-card {
-            background: #f8f9fa;
-            border: 2px solid #dee2e6;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 15px 0;
-            transition: all 0.3s ease;
-        }
-        
-        .plan-card:hover {
-            border-color: #4facfe;
-            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.1);
-        }
-        
-        .plan-card h4 {
-            margin: 0 0 15px 0;
-            color: #333;
-            font-size: 1.2em;
-        }
-        
-        .plan-meals {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .plan-meal {
-            background: white;
-            border: 1px solid #dee2e6;
-            border-radius: 6px;
-            padding: 10px;
-            text-align: center;
-        }
-        
-        .plan-meal .meal-name {
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 5px;
-        }
-        
-        .plan-meal .meal-calories {
-            color: #4facfe;
-            font-size: 0.9em;
-        }
-        
-        .plan-totals {
-            background: #e3f2fd;
-            border-radius: 6px;
-            padding: 10px;
-            margin-top: 10px;
-        }
-        
-        .plan-totals .total-calories {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #1976d2;
-        }
-        
-        .plan-totals .total-macros {
-            font-size: 0.9em;
-            color: #666;
-            margin-top: 5px;
-        }
-        
-        .score {
-            background: linear-gradient(135deg, #4caf50 0%, #8bc34a 100%);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            display: inline-block;
-            margin-top: 10px;
-        }
-        
-        .crossover-demo {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin: 20px 0;
-            flex-wrap: wrap;
-        }
-        
-        .parent {
-            background: #e3f2fd;
-            border: 2px solid #4facfe;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            min-width: 200px;
-            margin: 10px;
-        }
-        
-        .child {
-            background: #f3e5f5;
-            border: 2px solid #9c27b0;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            min-width: 200px;
-            margin: 10px;
-        }
-        
-        .arrow {
-            font-size: 2em;
-            color: #4facfe;
-            margin: 0 20px;
-        }
-        
-        .mutation-demo {
-            background: #fff3e0;
-            border: 2px solid #ff9800;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        
-        .mutation-demo h4 {
-            color: #e65100;
-            margin-top: 0;
-        }
-        
-        .before-after {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin: 15px 0;
-            flex-wrap: wrap;
-        }
-        
-        .before, .after {
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            min-width: 200px;
-            margin: 10px;
-        }
-        
-        .highlight {
-            background: #ffeb3b;
-            padding: 2px 4px;
-            border-radius: 3px;
-        }
-        
-        .stats {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        
-        .stats h4 {
-            margin-top: 0;
-            color: #333;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-        }
-        
-        .stat-item {
-            text-align: center;
-            padding: 10px;
-            background: white;
-            border-radius: 6px;
-            border: 1px solid #dee2e6;
-        }
-        
-        .stat-value {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #4facfe;
-        }
-        
-        .stat-label {
-            font-size: 0.9em;
-            color: #666;
-            margin-top: 5px;
-        }
-        
         .navigation {
             text-align: center;
             margin-top: 30px;
@@ -316,19 +93,6 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
         }
-        
-        .generation {
-            background: #e8f5e8;
-            border-left: 4px solid #4caf50;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 0 8px 8px 0;
-        }
-        
-        .generation h4 {
-            margin-top: 0;
-            color: #2e7d32;
-        }
     </style>
 </head>
 <body>
@@ -339,346 +103,241 @@
         </div>
         
         <div class="step-container">
-            <!-- Step 1: User Inputs and Targets -->
+            <!-- Step 1: User Inputs and Target Calculation -->
             <div class="step">
                 <div class="step-header">
                     Step 1: User Inputs and Target Calculation
                 </div>
                 <div class="step-content">
-                    <h4>User Profile:</h4>
-                    <div class="stats">
-                        <div class="stats-grid">
-                            <div class="stat-item">
-                                <div class="stat-value">25</div>
-                                <div class="stat-label">Age</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-value">70kg</div>
-                                <div class="stat-label">Weight</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-value">175cm</div>
-                                <div class="stat-label">Height</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-value">Male</div>
-                                <div class="stat-label">Gender</div>
-                            </div>
-                        </div>
+                    <h4>📊 How We Calculate Your Daily Targets:</h4>
+                    
+                    <div style="background: #f0f8ff; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <h5>🔢 BMR (Base Metabolic Rate) Formula:</h5>
+                        <p><strong>For Males:</strong> BMR = 10 × weight(kg) + 6.25 × height(cm) - 5 × age + 5</p>
+                        <p><strong>For Females:</strong> BMR = 10 × weight(kg) + 6.25 × height(cm) - 5 × age - 161</p>
+                        <p><em>Example: 10 × 70 + 6.25 × 175 - 5 × 25 + 5 = 1,675 calories</em></p>
                     </div>
                     
-                    <h4>Calculated Targets:</h4>
-                    <div class="stats">
-                        <div class="stats-grid">
-                            <div class="stat-item">
-                                <div class="stat-value">{{ targets.TDEE }} cal</div>
-                                <div class="stat-label">Daily Calories</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-value">{{ targets.Protein }}g</div>
-                                <div class="stat-label">Protein</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-value">{{ targets.Carbs }}g</div>
-                                <div class="stat-label">Carbs</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-value">{{ targets.Fat }}g</div>
-                                <div class="stat-label">Fat</div>
-                            </div>
-                        </div>
+                    <div style="background: #f0fff0; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <h5>⚡ TDEE (Total Daily Energy Expenditure):</h5>
+                        <p><strong>TDEE = BMR × Activity Level</strong></p>
+                        <ul>
+                            <li><strong>Sedentary:</strong> BMR × 1.53 (office work, no exercise)</li>
+                            <li><strong>Moderate:</strong> BMR × 1.80 (light exercise 3-5 days/week)</li>
+                            <li><strong>Heavy:</strong> BMR × 2.30 (heavy exercise 6-7 days/week)</li>
+                        </ul>
+                        <p><em>Example: 1,675 × 1.80 = 3,015 calories per day</em></p>
                     </div>
                     
-                    <h4>Meal Split:</h4>
-                    <div class="stats">
-                        <div class="stats-grid">
-                            <div class="stat-item">
-                                <div class="stat-value">{{ meal_split.breakfast }}%</div>
-                                <div class="stat-label">Breakfast</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-value">{{ meal_split.lunch }}%</div>
-                                <div class="stat-label">Lunch</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-value">{{ meal_split.dinner }}%</div>
-                                <div class="stat-label">Dinner</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-value">{{ macro_focus }}</div>
-                                <div class="stat-label">Macro Focus</div>
-                            </div>
+                    <div style="background: #fff8f0; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <h5>🍖 Macro Distribution Formula:</h5>
+                        <p><strong>Protein:</strong> Max(0.83 × weight, 15% of calories ÷ 4) grams</p>
+                        <p><strong>Carbs:</strong> 60% of calories ÷ 4 grams</p>
+                        <p><strong>Fat:</strong> 25% of calories ÷ 9 grams</p>
+                        <p><em>Example: Protein = Max(58g, 113g) = 113g</em></p>
+                    </div>
+                    
+                    <div style="background: #f8f0ff; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <h5>🍽️ How Meal Split Works:</h5>
+                        <p><strong>User sets percentages:</strong> Breakfast {{ meal_split.breakfast }}%, Lunch {{ meal_split.lunch }}%, Dinner {{ meal_split.dinner }}%</p>
+                        <p><strong>Calorie targets per meal:</strong></p>
+                        <ul>
+                            <li>Breakfast: {{ targets.TDEE }} × {{ meal_split.breakfast }}% = {{ (targets.TDEE * meal_split.breakfast / 100)|round }} calories</li>
+                            <li>Lunch: {{ targets.TDEE }} × {{ meal_split.lunch }}% = {{ (targets.TDEE * meal_split.lunch / 100)|round }} calories</li>
+                            <li>Dinner: {{ targets.TDEE }} × {{ meal_split.dinner }}% = {{ (targets.TDEE * meal_split.dinner / 100)|round }} calories</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #ffe0e0; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <h5>🎯 Macro Focus ({{ macro_focus }}) Weights:</h5>
+                        <p><strong>How we prioritize macros in scoring:</strong></p>
+                        <ul>
+                            <li><strong>Protein Focus:</strong> Protein weight = 2, Others = 1</li>
+                            <li><strong>Carbs Focus:</strong> Carbs weight = 2, Others = 1</li>
+                            <li><strong>Fat Focus:</strong> Fat weight = 2, Others = 1</li>
+                        </ul>
+                        <p><em>Higher weight = more important in meal selection</em></p>
+                    </div>
+                    
+                    <h4>📋 Your Calculated Targets:</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                        <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                            <div style="font-size: 1.5em; font-weight: bold; color: #4facfe;">{{ targets.TDEE }}</div>
+                            <div style="font-size: 0.9em; color: #666;">Daily Calories</div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                            <div style="font-size: 1.5em; font-weight: bold; color: #4facfe;">{{ targets.Protein }}g</div>
+                            <div style="font-size: 0.9em; color: #666;">Protein</div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                            <div style="font-size: 1.5em; font-weight: bold; color: #4facfe;">{{ targets.Carbs }}g</div>
+                            <div style="font-size: 0.9em; color: #666;">Carbs</div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                            <div style="font-size: 1.5em; font-weight: bold; color: #4facfe;">{{ targets.Fat }}g</div>
+                            <div style="font-size: 0.9em; color: #666;">Fat</div>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Step 2: Available Meal Options -->
+
+            <!-- Step 2: Fitness Scoring -->
             <div class="step">
                 <div class="step-header">
-                    Step 2: Available Meal Options (Top 10 each)
+                    Step 2: Fitness Scoring - The Heart of the Algorithm
                 </div>
                 <div class="step-content">
-                    <h4>Breakfast Options:</h4>
-                    <div class="meal-grid">
+                    <h4>🧮 How We Score Each Meal Plan (Simple Explanation):</h4>
+                    
+                    <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <h5>📐 Main Scoring Formula:</h5>
+                        <p><strong>Fitness Score = 5.0 × Calorie Score + Macro Scores + Meal Split Bonus</strong></p>
+                        <p><em>Higher score = better meal plan (closer to your targets)</em></p>
+                    </div>
+                    
+                    <div style="background: #fff3e0; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <h5>🎯 1. Calorie Scoring (Most Important - Weight: 5.0):</h5>
+                        <p><strong>How close are total calories to your TDEE target?</strong></p>
+                        <ul>
+                            <li><strong>Perfect (≤5% off):</strong> Score = 1.0 → Contributes 5.0 points</li>
+                            <li><strong>Good (≤10% off):</strong> Score = 0.5 → Contributes 2.5 points</li>
+                            <li><strong>Okay (≤15% off):</strong> Score = 0.2 → Contributes 1.0 points</li>
+                            <li><strong>Poor (>15% off):</strong> Score = 0.0 → Contributes 0.0 points</li>
+                        </ul>
+                        <p><em>Example: If target is 2000 cal and plan has 1950 cal → 2.5% off → Perfect score!</em></p>
+                    </div>
+                    
+                    <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <h5>🍖 2. Macro Scoring (Weight: 0.5 each × Macro Focus):</h5>
+                        <p><strong>Formula for each macro:</strong></p>
+                        <p>Macro Score = Max(0, 1 - |Actual - Target| / Target) × Macro Weight × 0.5</p>
+                        
+                        <h6>Macro Focus Weights:</h6>
+                        <ul>
+                            <li><strong>Protein Focus:</strong> Protein = 2.0, Carbs = 1.0, Fat = 1.0</li>
+                            <li><strong>Carbs Focus:</strong> Protein = 1.0, Carbs = 2.0, Fat = 1.0</li>
+                            <li><strong>Fat Focus:</strong> Protein = 1.0, Carbs = 1.0, Fat = 2.0</li>
+                        </ul>
+                        
+                        <p><em>Example: Target protein = 100g, Actual = 90g, Focus = Protein</em></p>
+                        <p><em>Score = (1 - |90-100|/100) × 2.0 × 0.5 = 0.9 × 2.0 × 0.5 = 0.9 points</em></p>
+                    </div>
+                    
+                    <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <h5>🍽️ 3. Meal Split Bonus (Weight: 1.0):</h5>
+                        <p><strong>How well does the plan follow your meal calorie distribution?</strong></p>
+                        <p>Bonus = Max(0, 1 - (Breakfast_diff + Lunch_diff + Dinner_diff) / 60)</p>
+                        
+                        <p><em>Example: You want 25% breakfast, but plan has 30%</em></p>
+                        <p><em>Difference = |30% - 25%| = 5%</em></p>
+                        <p><em>If total differences = 15%, Bonus = 1 - 15/60 = 0.75 points</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Available Meal Options -->
+            <div class="step">
+                <div class="step-header">
+                    Step 3: Available Meal Options (Top 10 each)
+                </div>
+                <div class="step-content">
+                    <h4>🍳 Breakfast Options:</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
                         {% for meal in bfast_combos %}
-                        <div class="meal-card">
-                            <h4>{{ meal.name }}</h4>
-                            <div class="calories">{{ meal.calories }} cal</div>
-                            <div class="macros">P: {{ meal.protein }}g | C: {{ meal.carbs }}g | F: {{ meal.fat }}g</div>
+                        <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; text-align: center;">
+                            <h5 style="margin: 0 0 10px 0; color: #333;">{{ meal.name }}</h5>
+                            <div style="font-weight: bold; color: #4facfe; font-size: 1.2em;">{{ meal.calories }} cal</div>
+                            <div style="font-size: 0.9em; color: #666; margin-top: 5px;">P: {{ meal.protein }}g | C: {{ meal.carbs }}g | F: {{ meal.fat }}g</div>
                         </div>
                         {% endfor %}
                     </div>
                     
-                    <h4>Lunch Options:</h4>
-                    <div class="meal-grid">
+                    <h4>🍽️ Lunch Options:</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
                         {% for meal in lunch_combos %}
-                        <div class="meal-card">
-                            <h4>{{ meal.name }}</h4>
-                            <div class="calories">{{ meal.calories }} cal</div>
-                            <div class="macros">P: {{ meal.protein }}g | C: {{ meal.carbs }}g | F: {{ meal.fat }}g</div>
+                        <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; text-align: center;">
+                            <h5 style="margin: 0 0 10px 0; color: #333;">{{ meal.name }}</h5>
+                            <div style="font-weight: bold; color: #4facfe; font-size: 1.2em;">{{ meal.calories }} cal</div>
+                            <div style="font-size: 0.9em; color: #666; margin-top: 5px;">P: {{ meal.protein }}g | C: {{ meal.carbs }}g | F: {{ meal.fat }}g</div>
                         </div>
                         {% endfor %}
                     </div>
                     
-                    <h4>Dinner Options:</h4>
-                    <div class="meal-grid">
+                    <h4>🍖 Dinner Options:</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
                         {% for meal in dinner_combos %}
-                        <div class="meal-card">
-                            <h4>{{ meal.name }}</h4>
-                            <div class="calories">{{ meal.calories }} cal</div>
-                            <div class="macros">P: {{ meal.protein }}g | C: {{ meal.carbs }}g | F: {{ meal.fat }}g</div>
+                        <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; text-align: center;">
+                            <h5 style="margin: 0 0 10px 0; color: #333;">{{ meal.name }}</h5>
+                            <div style="font-weight: bold; color: #4facfe; font-size: 1.2em;">{{ meal.calories }} cal</div>
+                            <div style="font-size: 0.9em; color: #666; margin-top: 5px;">P: {{ meal.protein }}g | C: {{ meal.carbs }}g | F: {{ meal.fat }}g</div>
                         </div>
                         {% endfor %}
                     </div>
                 </div>
             </div>
-            
-            <!-- Step 3: Initial Population -->
+
+            <!-- Step 4: Generated Plans -->
             <div class="step">
                 <div class="step-header">
-                    Step 3: Initial Population (20 Random Plans)
+                    Step 4: Generated Meal Plans (20 Random Examples)
                 </div>
                 <div class="step-content">
-                    <p>We create 20 random meal plans by randomly selecting one breakfast, one lunch, and one dinner from the available options.</p>
+                    <h4>🎲 Sample Plans Generated by Algorithm:</h4>
+                    <p><em>These are examples of the meal combinations the genetic algorithm would evaluate and optimize.</em></p>
                     
-                    <div class="generation">
-                        <h4>Generation 0 - Initial Population:</h4>
-                        <div id="initial-population">
-                            <!-- This will be populated by JavaScript -->
-                        </div>
+                    <div id="generated-plans" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; margin: 20px 0;">
+                        <!-- Plans will be populated by JavaScript -->
+                    </div>
+                    
+                    <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <h5>📊 Total Possible Combinations:</h5>
+                        <p><strong>10 × 10 × 10 = 1,000 possible meal plans</strong></p>
+                        <p>The genetic algorithm intelligently searches through these combinations to find the best 20 plans that match your nutritional targets!</p>
                     </div>
                 </div>
             </div>
-            
-            <!-- Step 4: Fitness Scoring -->
+
+            <!-- Step 5: Genetic Algorithm Process -->
             <div class="step">
                 <div class="step-header">
-                    Step 4: Fitness Scoring
+                    Step 5: Genetic Algorithm Evolution Process
                 </div>
                 <div class="step-content">
-                    <p>Each plan is scored based on how close it is to the target calories and macros. The formula is:</p>
-                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0;">
-                        <strong>Fitness Score = 100 - (Calorie Penalty + Macro Penalty + Variety Penalty)</strong>
+                    <h4>🔄 The Complete Evolution Process:</h4>
+                    
+                    <div style="background: #f0f8ff; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <h5>📈 What Happens Each Generation:</h5>
+                        <ol>
+                            <li><strong>Score all 100 plans</strong> using our fitness formula</li>
+                            <li><strong>Select top 20 as elite</strong> (survive unchanged)</li>
+                            <li><strong>Select top 70 as breeders</strong> (can reproduce)</li>
+                            <li><strong>Create 80 new plans</strong> through crossover</li>
+                            <li><strong>Apply 5% mutation rate</strong> to non-elite plans</li>
+                            <li><strong>Form next generation</strong> of 100 plans</li>
+                        </ol>
                     </div>
                     
-                    <div class="generation">
-                        <h4>Scored Population (sorted by fitness):</h4>
-                        <div id="scored-population">
-                            <!-- This will be populated by JavaScript -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Step 5: Selection -->
-            <div class="step">
-                <div class="step-header">
-                    Step 5: Selection (Elite + Breeders)
-                </div>
-                <div class="step-content">
-                    <p>We select the best plans for the next generation:</p>
-                    <ul>
-                        <li><strong>Elite (4 plans):</strong> Top 4 plans that survive unchanged</li>
-                        <li><strong>Breeders (14 plans):</strong> Top 14 plans used for crossover</li>
-                    </ul>
-                    
-                    <div class="generation">
-                        <h4>Selected Plans:</h4>
-                        <div id="selected-plans">
-                            <!-- This will be populated by JavaScript -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Step 6: Crossover -->
-            <div class="step">
-                <div class="step-header">
-                    Step 6: Crossover (Breeding)
-                </div>
-                <div class="step-content">
-                    <p>We create 16 new plans by mixing two parent plans:</p>
-                    
-                    <div class="crossover-demo">
-                        <div class="parent">
-                            <h4>Parent 1</h4>
-                            <div class="plan-meal">
-                                <div class="meal-name">Oatmeal</div>
-                                <div class="meal-calories">300 cal</div>
-                            </div>
-                            <div class="plan-meal">
-                                <div class="meal-name">Chicken Salad</div>
-                                <div class="meal-calories">450 cal</div>
-                            </div>
-                            <div class="plan-meal">
-                                <div class="meal-name">Grilled Salmon</div>
-                                <div class="meal-calories">420 cal</div>
-                            </div>
-                        </div>
-                        
-                        <div class="arrow">+</div>
-                        
-                        <div class="parent">
-                            <h4>Parent 2</h4>
-                            <div class="plan-meal">
-                                <div class="meal-name">Scrambled Eggs</div>
-                                <div class="meal-calories">280 cal</div>
-                            </div>
-                            <div class="plan-meal">
-                                <div class="meal-name">Rice with Curry</div>
-                                <div class="meal-calories">480 cal</div>
-                            </div>
-                            <div class="plan-meal">
-                                <div class="meal-name">Pasta Carbonara</div>
-                                <div class="meal-calories">580 cal</div>
-                            </div>
-                        </div>
-                        
-                        <div class="arrow">→</div>
-                        
-                        <div class="child">
-                            <h4>Child</h4>
-                            <div class="plan-meal">
-                                <div class="meal-name">Oatmeal</div>
-                                <div class="meal-calories">300 cal</div>
-                            </div>
-                            <div class="plan-meal">
-                                <div class="meal-name">Rice with Curry</div>
-                                <div class="meal-calories">480 cal</div>
-                            </div>
-                            <div class="plan-meal">
-                                <div class="meal-name">Grilled Salmon</div>
-                                <div class="meal-calories">420 cal</div>
-                            </div>
-                        </div>
+                    <div style="background: #fff8f0; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <h5>🎯 Why This Works (Simple Explanation):</h5>
+                        <ul>
+                            <li><strong>Best plans survive:</strong> Elite plans pass good traits to next generation</li>
+                            <li><strong>Good plans breed:</strong> Crossover combines successful meal combinations</li>
+                            <li><strong>Mutations add variety:</strong> Prevents getting stuck with similar plans</li>
+                            <li><strong>Bad plans disappear:</strong> Low-scoring plans are naturally eliminated</li>
+                        </ul>
+                        <p><em>Like natural evolution, but for meal plans!</em></p>
                     </div>
                     
-                    <p><strong>Formula:</strong> Child = [Parent1.Breakfast, Parent2.Lunch, Parent1.Dinner]</p>
-                </div>
-            </div>
-            
-            <!-- Step 7: Mutation -->
-            <div class="step">
-                <div class="step-header">
-                    Step 7: Mutation (Random Changes)
-                </div>
-                <div class="step-content">
-                    <p>We randomly change 5% of non-elite plans to introduce variety:</p>
-                    
-                    <div class="mutation-demo">
-                        <h4>Mutation Example:</h4>
-                        <div class="before-after">
-                            <div class="before">
-                                <h4>Before Mutation</h4>
-                                <div class="plan-meal">
-                                    <div class="meal-name">Oatmeal</div>
-                                </div>
-                                <div class="plan-meal">
-                                    <div class="meal-name">Chicken Salad</div>
-                                </div>
-                                <div class="plan-meal">
-                                    <div class="meal-name">Grilled Salmon</div>
-                                </div>
-                            </div>
-                            
-                            <div class="arrow">→</div>
-                            
-                            <div class="after">
-                                <h4>After Mutation</h4>
-                                <div class="plan-meal">
-                                    <div class="meal-name">Oatmeal</div>
-                                </div>
-                                <div class="plan-meal">
-                                    <div class="meal-name highlight">Pasta with Meatballs</div>
-                                </div>
-                                <div class="plan-meal">
-                                    <div class="meal-name">Grilled Salmon</div>
-                                </div>
-                            </div>
-                        </div>
-                        <p><strong>Random change:</strong> Lunch changed from "Chicken Salad" to "Pasta with Meatballs"</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Step 8: Next Generation -->
-            <div class="step">
-                <div class="step-header">
-                    Step 8: Next Generation
-                </div>
-                <div class="step-content">
-                    <p>We combine all plans to create the next generation:</p>
-                    <ul>
-                        <li><strong>4 Elite plans</strong> (unchanged)</li>
-                        <li><strong>16 Crossover plans</strong> (new combinations)</li>
-                        <li><strong>Total: 20 plans</strong> for next generation</li>
-                    </ul>
-                    
-                    <div class="generation">
-                        <h4>Generation 1 - After Evolution:</h4>
-                        <div id="next-generation">
-                            <!-- This will be populated by JavaScript -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Step 9: Iteration -->
-            <div class="step">
-                <div class="step-header">
-                    Step 9: Repeat for 50 Generations
-                </div>
-                <div class="step-content">
-                    <p>We repeat this process for 50 generations, each time:</p>
-                    <ol>
-                        <li>Score all plans</li>
-                        <li>Select elite and breeders</li>
-                        <li>Create new plans through crossover</li>
-                        <li>Apply mutations</li>
-                        <li>Form next generation</li>
-                    </ol>
-                    
-                    <div class="stats">
-                        <h4>Final Results:</h4>
-                        <div class="stats-grid">
-                            <div class="stat-item">
-                                <div class="stat-value">50</div>
-                                <div class="stat-label">Generations</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-value">1000</div>
-                                <div class="stat-label">Total Evaluations</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-value">95.2</div>
-                                <div class="stat-label">Best Score</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-value">5</div>
-                                <div class="stat-label">Top Plans</div>
-                            </div>
-                        </div>
+                    <div style="background: #f0fff0; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <h5>📊 Algorithm Parameters (What We Actually Use):</h5>
+                        <ul>
+                            <li><strong>Population Size:</strong> 100 plans per generation</li>
+                            <li><strong>Generations:</strong> 50 iterations</li>
+                            <li><strong>Elite Rate:</strong> Top 20% survive unchanged</li>
+                            <li><strong>Breeding Pool:</strong> Top 70% can reproduce</li>
+                            <li><strong>Mutation Rate:</strong> 5% of non-elite plans</li>
+                            <li><strong>Total Evaluations:</strong> 100 × 50 = 5,000 meal plans tested!</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -697,9 +356,11 @@
         const dinnerCombos = {{ dinner_combos | tojson }};
         const targets = {{ targets | tojson }};
         
-        // Generate 20 random initial plans
-        function generateInitialPopulation() {
-            const population = [];
+        // Generate 20 random meal plans
+        function generateSamplePlans() {
+            const plans = [];
+            const planContainer = document.getElementById('generated-plans');
+            
             for (let i = 0; i < 20; i++) {
                 const bfast = bfastCombos[Math.floor(Math.random() * bfastCombos.length)];
                 const lunch = lunchCombos[Math.floor(Math.random() * lunchCombos.length)];
@@ -710,7 +371,17 @@
                 const totalCarbs = bfast.carbs + lunch.carbs + dinner.carbs;
                 const totalFat = bfast.fat + lunch.fat + dinner.fat;
                 
-                population.push({
+                // Calculate fitness score (simplified)
+                const calorieDev = Math.abs(totalCalories - targets.TDEE) / targets.TDEE;
+                const proteinDev = Math.abs(totalProtein - targets.Protein) / targets.Protein;
+                const carbsDev = Math.abs(totalCarbs - targets.Carbs) / targets.Carbs;
+                const fatDev = Math.abs(totalFat - targets.Fat) / targets.Fat;
+                
+                const caloriePenalty = calorieDev * 30;
+                const macroPenalty = (proteinDev + carbsDev + fatDev) * 20;
+                const fitnessScore = Math.max(0, 100 - (caloriePenalty + macroPenalty));
+                
+                const plan = {
                     id: i + 1,
                     breakfast: bfast,
                     lunch: lunch,
@@ -718,264 +389,74 @@
                     totalCalories,
                     totalProtein,
                     totalCarbs,
-                    totalFat
-                });
-            }
-            return population;
-        }
-        
-        // Calculate fitness score
-        function calculateFitness(plan) {
-            const calorieDev = Math.abs(plan.totalCalories - targets.TDEE) / targets.TDEE;
-            const proteinDev = Math.abs(plan.totalProtein - targets.Protein) / targets.Protein;
-            const carbsDev = Math.abs(plan.totalCarbs - targets.Carbs) / targets.Carbs;
-            const fatDev = Math.abs(plan.totalFat - targets.Fat) / targets.Fat;
-            
-            const caloriePenalty = calorieDev * 30;
-            const macroPenalty = (proteinDev + carbsDev + fatDev) * 20;
-            const varietyPenalty = 0; // Simplified for demo
-            
-            return Math.max(0, 100 - (caloriePenalty + macroPenalty + varietyPenalty));
-        }
-        
-        // Generate and display initial population
-        function displayInitialPopulation() {
-            const population = generateInitialPopulation();
-            const container = document.getElementById('initial-population');
-            
-            population.forEach((plan, index) => {
-                const planDiv = document.createElement('div');
-                planDiv.className = 'plan-card';
-                planDiv.innerHTML = `
-                    <h4>Plan ${plan.id}</h4>
-                    <div class="plan-meals">
-                        <div class="plan-meal">
-                            <div class="meal-name">${plan.breakfast.name}</div>
-                            <div class="meal-calories">${plan.breakfast.calories} cal</div>
-                        </div>
-                        <div class="plan-meal">
-                            <div class="meal-name">${plan.lunch.name}</div>
-                            <div class="meal-calories">${plan.lunch.calories} cal</div>
-                        </div>
-                        <div class="plan-meal">
-                            <div class="meal-name">${plan.dinner.name}</div>
-                            <div class="meal-calories">${plan.dinner.calories} cal</div>
-                        </div>
-                    </div>
-                    <div class="plan-totals">
-                        <div class="total-calories">Total: ${plan.totalCalories} calories</div>
-                        <div class="total-macros">P: ${plan.totalProtein}g | C: ${plan.totalCarbs}g | F: ${plan.totalFat}g</div>
-                    </div>
-                `;
-                container.appendChild(planDiv);
-            });
-        }
-        
-        // Display scored population
-        function displayScoredPopulation() {
-            const population = generateInitialPopulation();
-            const scoredPopulation = population.map(plan => ({
-                ...plan,
-                fitness: calculateFitness(plan)
-            })).sort((a, b) => b.fitness - a.fitness);
-            
-            const container = document.getElementById('scored-population');
-            
-            scoredPopulation.forEach((plan, index) => {
-                const planDiv = document.createElement('div');
-                planDiv.className = 'plan-card';
-                planDiv.innerHTML = `
-                    <h4>Plan ${plan.id} (Rank ${index + 1})</h4>
-                    <div class="plan-meals">
-                        <div class="plan-meal">
-                            <div class="meal-name">${plan.breakfast.name}</div>
-                            <div class="meal-calories">${plan.breakfast.calories} cal</div>
-                        </div>
-                        <div class="plan-meal">
-                            <div class="meal-name">${plan.lunch.name}</div>
-                            <div class="meal-calories">${plan.lunch.calories} cal</div>
-                        </div>
-                        <div class="plan-meal">
-                            <div class="meal-name">${plan.dinner.name}</div>
-                            <div class="meal-calories">${plan.dinner.calories} cal</div>
-                        </div>
-                    </div>
-                    <div class="plan-totals">
-                        <div class="total-calories">Total: ${plan.totalCalories} calories</div>
-                        <div class="total-macros">P: ${plan.totalProtein}g | C: ${plan.totalCarbs}g | F: ${plan.totalFat}g</div>
-                    </div>
-                    <div class="score">Fitness: ${plan.fitness.toFixed(1)}</div>
-                `;
-                container.appendChild(planDiv);
-            });
-        }
-        
-        // Display selected plans
-        function displaySelectedPlans() {
-            const population = generateInitialPopulation();
-            const scoredPopulation = population.map(plan => ({
-                ...plan,
-                fitness: calculateFitness(plan)
-            })).sort((a, b) => b.fitness - a.fitness);
-            
-            const elite = scoredPopulation.slice(0, 4);
-            const breeders = scoredPopulation.slice(0, 14);
-            
-            const container = document.getElementById('selected-plans');
-            
-            // Elite plans
-            const eliteDiv = document.createElement('div');
-            eliteDiv.innerHTML = '<h4>Elite Plans (Top 4):</h4>';
-            elite.forEach(plan => {
-                const planDiv = document.createElement('div');
-                planDiv.className = 'plan-card';
-                planDiv.style.borderColor = '#4caf50';
-                planDiv.innerHTML = `
-                    <h4>Plan ${plan.id} - ELITE</h4>
-                    <div class="plan-meals">
-                        <div class="plan-meal">
-                            <div class="meal-name">${plan.breakfast.name}</div>
-                            <div class="meal-calories">${plan.breakfast.calories} cal</div>
-                        </div>
-                        <div class="plan-meal">
-                            <div class="meal-name">${plan.lunch.name}</div>
-                            <div class="meal-calories">${plan.lunch.calories} cal</div>
-                        </div>
-                        <div class="plan-meal">
-                            <div class="meal-name">${plan.dinner.name}</div>
-                            <div class="meal-calories">${plan.dinner.calories} cal</div>
-                        </div>
-                    </div>
-                    <div class="score">Fitness: ${plan.fitness.toFixed(1)}</div>
-                `;
-                eliteDiv.appendChild(planDiv);
-            });
-            container.appendChild(eliteDiv);
-            
-            // Breeders
-            const breedersDiv = document.createElement('div');
-            breedersDiv.innerHTML = '<h4>Breeders (Top 14):</h4>';
-            breeders.forEach(plan => {
-                const planDiv = document.createElement('div');
-                planDiv.className = 'plan-card';
-                planDiv.style.borderColor = '#4facfe';
-                planDiv.innerHTML = `
-                    <h4>Plan ${plan.id} - BREEDER</h4>
-                    <div class="plan-meals">
-                        <div class="plan-meal">
-                            <div class="meal-name">${plan.breakfast.name}</div>
-                            <div class="meal-calories">${plan.breakfast.calories} cal</div>
-                        </div>
-                        <div class="plan-meal">
-                            <div class="meal-name">${plan.lunch.name}</div>
-                            <div class="meal-calories">${plan.lunch.calories} cal</div>
-                        </div>
-                        <div class="plan-meal">
-                            <div class="meal-name">${plan.dinner.name}</div>
-                            <div class="meal-calories">${plan.dinner.calories} cal</div>
-                        </div>
-                    </div>
-                    <div class="score">Fitness: ${plan.fitness.toFixed(1)}</div>
-                `;
-                breedersDiv.appendChild(planDiv);
-            });
-            container.appendChild(breedersDiv);
-        }
-        
-        // Display next generation
-        function displayNextGeneration() {
-            const population = generateInitialPopulation();
-            const scoredPopulation = population.map(plan => ({
-                ...plan,
-                fitness: calculateFitness(plan)
-            })).sort((a, b) => b.fitness - a.fitness);
-            
-            const elite = scoredPopulation.slice(0, 4);
-            const breeders = scoredPopulation.slice(0, 14);
-            
-            const container = document.getElementById('next-generation');
-            
-            // Elite plans (unchanged)
-            elite.forEach(plan => {
-                const planDiv = document.createElement('div');
-                planDiv.className = 'plan-card';
-                planDiv.style.borderColor = '#4caf50';
-                planDiv.innerHTML = `
-                    <h4>Plan ${plan.id} - ELITE (unchanged)</h4>
-                    <div class="plan-meals">
-                        <div class="plan-meal">
-                            <div class="meal-name">${plan.breakfast.name}</div>
-                            <div class="meal-calories">${plan.breakfast.calories} cal</div>
-                        </div>
-                        <div class="plan-meal">
-                            <div class="meal-name">${plan.lunch.name}</div>
-                            <div class="meal-calories">${plan.lunch.calories} cal</div>
-                        </div>
-                        <div class="plan-meal">
-                            <div class="meal-name">${plan.dinner.name}</div>
-                            <div class="meal-calories">${plan.dinner.calories} cal</div>
-                        </div>
-                    </div>
-                    <div class="score">Fitness: ${plan.fitness.toFixed(1)}</div>
-                `;
-                container.appendChild(planDiv);
-            });
-            
-            // Crossover plans (simplified example)
-            for (let i = 0; i < 16; i++) {
-                const parent1 = breeders[Math.floor(Math.random() * breeders.length)];
-                const parent2 = breeders[Math.floor(Math.random() * breeders.length)];
-                
-                const child = {
-                    id: `C${i + 1}`,
-                    breakfast: parent1.breakfast,
-                    lunch: parent2.lunch,
-                    dinner: parent1.dinner,
-                    totalCalories: parent1.breakfast.calories + parent2.lunch.calories + parent1.dinner.calories,
-                    totalProtein: parent1.breakfast.protein + parent2.lunch.protein + parent1.dinner.protein,
-                    totalCarbs: parent1.breakfast.carbs + parent2.lunch.carbs + parent1.dinner.carbs,
-                    totalFat: parent1.breakfast.fat + parent2.lunch.fat + parent1.dinner.fat
+                    totalFat,
+                    fitnessScore: fitnessScore.toFixed(1)
                 };
                 
-                child.fitness = calculateFitness(child);
-                
-                const planDiv = document.createElement('div');
-                planDiv.className = 'plan-card';
-                planDiv.style.borderColor = '#9c27b0';
-                planDiv.innerHTML = `
-                    <h4>Plan ${child.id} - CROSSOVER</h4>
-                    <div class="plan-meals">
-                        <div class="plan-meal">
-                            <div class="meal-name">${child.breakfast.name}</div>
-                            <div class="meal-calories">${child.breakfast.calories} cal</div>
-                        </div>
-                        <div class="plan-meal">
-                            <div class="meal-name">${child.lunch.name}</div>
-                            <div class="meal-calories">${child.lunch.calories} cal</div>
-                        </div>
-                        <div class="plan-meal">
-                            <div class="meal-name">${child.dinner.name}</div>
-                            <div class="meal-calories">${child.dinner.calories} cal</div>
-                        </div>
-                    </div>
-                    <div class="plan-totals">
-                        <div class="total-calories">Total: ${child.totalCalories} calories</div>
-                        <div class="total-macros">P: ${child.totalProtein}g | C: ${child.totalCarbs}g | F: ${child.totalFat}g</div>
-                    </div>
-                    <div class="score">Fitness: ${child.fitness.toFixed(1)}</div>
-                `;
-                container.appendChild(planDiv);
+                plans.push(plan);
             }
+            
+            // Sort by fitness score
+            plans.sort((a, b) => b.fitnessScore - a.fitnessScore);
+            
+            // Display plans
+            plans.forEach((plan, index) => {
+                const planDiv = document.createElement('div');
+                planDiv.style.cssText = `
+                    background: ${index < 5 ? '#d4edda' : '#f8f9fa'};
+                    border: 2px solid ${index < 5 ? '#28a745' : '#dee2e6'};
+                    border-radius: 10px;
+                    padding: 20px;
+                    position: relative;
+                `;
+                
+                planDiv.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h4 style="margin: 0; color: #333;">Plan ${plan.id} ${index < 5 ? '🏆' : ''}</h4>
+                        <div style="background: ${index < 5 ? '#28a745' : '#007BFF'}; color: white; padding: 5px 10px; border-radius: 15px; font-weight: bold;">
+                            Score: ${plan.fitnessScore}
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                        <div style="background: white; padding: 10px; border-radius: 6px; text-align: center;">
+                            <div style="font-weight: bold; color: #333; margin-bottom: 5px;">🍳 Breakfast</div>
+                            <div style="font-size: 0.9em; color: #666;">${plan.breakfast.name}</div>
+                            <div style="color: #4facfe; font-weight: bold;">${plan.breakfast.calories} cal</div>
+                        </div>
+                        <div style="background: white; padding: 10px; border-radius: 6px; text-align: center;">
+                            <div style="font-weight: bold; color: #333; margin-bottom: 5px;">🍽️ Lunch</div>
+                            <div style="font-size: 0.9em; color: #666;">${plan.lunch.name}</div>
+                            <div style="color: #4facfe; font-weight: bold;">${plan.lunch.calories} cal</div>
+                        </div>
+                        <div style="background: white; padding: 10px; border-radius: 6px; text-align: center;">
+                            <div style="font-weight: bold; color: #333; margin-bottom: 5px;">🍖 Dinner</div>
+                            <div style="font-size: 0.9em; color: #666;">${plan.dinner.name}</div>
+                            <div style="color: #4facfe; font-weight: bold;">${plan.dinner.calories} cal</div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #e3f2fd; border-radius: 6px; padding: 10px;">
+                        <div style="font-size: 1.2em; font-weight: bold; color: #1976d2; text-align: center;">
+                            Total: ${plan.totalCalories} calories
+                        </div>
+                        <div style="font-size: 0.9em; color: #666; margin-top: 5px; text-align: center;">
+                            P: ${plan.totalProtein}g | C: ${plan.totalCarbs}g | F: ${plan.totalFat}g
+                        </div>
+                        <div style="font-size: 0.8em; color: #666; margin-top: 5px; text-align: center;">
+                            Accuracy: ${((plan.totalCalories / targets.TDEE) * 100).toFixed(1)}% of target calories
+                        </div>
+                    </div>
+                `;
+                
+                planContainer.appendChild(planDiv);
+            });
         }
         
-        // Initialize the visualization
+        // Generate plans when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            displayInitialPopulation();
-            displayScoredPopulation();
-            displaySelectedPlans();
-            displayNextGeneration();
+            generateSamplePlans();
         });
     </script>
 </body>
 </html>
-
