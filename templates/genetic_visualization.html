@@ -1,462 +1,1301 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Genetic Algorithm Visualization</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Genetic Algorithm Visualization - NutriPlan</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-        
-        .header h1 {
-            margin: 0;
-            font-size: 2.5em;
-            font-weight: 300;
-        }
-        
-        .header p {
-            margin: 10px 0 0 0;
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-        
-        .step-container {
-            padding: 30px;
-        }
-        
-        .step {
-            margin-bottom: 40px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .step:hover {
-            border-color: #4facfe;
-            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.2);
-        }
-        
-        .step-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            font-size: 1.3em;
-            font-weight: 600;
-        }
-        
-        .step-content {
-            padding: 25px;
-        }
-        
-        .navigation {
-            text-align: center;
-            margin-top: 30px;
-        }
-        
-        .btn {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-size: 1em;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            margin: 0 10px;
-            transition: all 0.3s ease;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #f5f7f0 0%, #e8ede0 100%);
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1300px;
+        margin: 30px auto 30px auto;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(107, 124, 79, 0.15);
+        padding: 0 20px 20px 20px;
+      }
+
+      header {
+        background: linear-gradient(135deg, #6b7c4f 0%, #8b9d6a 100%);
+        color: white;
+        padding: 30px 20px;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(107, 124, 79, 0.3);
+      }
+
+      header h1 {
+        font-size: 2.5em;
+        font-weight: 700;
+        margin-bottom: 8px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      header .subtitle {
+        font-size: 1.1em;
+        font-weight: 300;
+        opacity: 0.95;
+      }
+
+      nav {
+        background: #8b9d6a;
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        flex-wrap: wrap;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        margin: 5px 20px;
+        font-weight: 500;
+        padding: 8px 16px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+      }
+
+      nav a:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+      }
+
+      nav a.active {
+        background: rgba(255, 255, 255, 0.3);
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .step-container {
+        padding: 40px;
+      }
+
+      .step {
+        margin-bottom: 40px;
+        border: 2px solid #d4e0c4;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 10px rgba(107, 124, 79, 0.08);
+      }
+
+      .step:hover {
+        border-color: #8b9d6a;
+        box-shadow: 0 6px 20px rgba(107, 124, 79, 0.15);
+        transform: translateY(-2px);
+      }
+
+      .step-header {
+        background: linear-gradient(135deg, #8b9d6a 0%, #a0b380 100%);
+        color: white;
+        padding: 25px;
+        font-size: 1.4em;
+        font-weight: 600;
+      }
+
+      .step-content {
+        padding: 30px;
+        background: #fafbf8;
+      }
+
+      .navigation {
+        text-align: center;
+        margin-top: 30px;
+        padding: 20px;
+      }
+
+      .btn {
+        background: linear-gradient(135deg, #8b9d6a 0%, #a0b380 100%);
+        color: white;
+        border: none;
+        padding: 14px 30px;
+        border-radius: 25px;
+        font-size: 1em;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0 10px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(139, 157, 106, 0.3);
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(139, 157, 106, 0.4);
+      }
+
+      h4,
+      h5,
+      h6 {
+        color: #6b7c4f;
+        margin: 15px 0 10px 0;
+      }
+
+      .example-box {
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        border: 2px solid #d4e0c4;
+        margin: 10px 0;
+      }
+
+      .highlight-box {
+        background: linear-gradient(135deg, #f9faf7 0%, #f0f4e8 100%);
+        padding: 20px;
+        border-radius: 12px;
+        margin: 15px 0;
+        border-left: 4px solid #8b9d6a;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <header>
+      <h1>🧬 Genetic Algorithm</h1>
+      <div class="subtitle">5 Steps Explained with Examples</div>
+      <div style="margin-top: 10px; font-size: 13px; opacity: 0.9">
+        <span
+          style="
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 15px;
+          "
+          >🔬 Visualization</span
+        >
+      </div>
+    </header>
+    <nav>
+      <a href="{{ url_for('index') }}">Home</a>
+      <a href="{{ url_for('compare_algorithms_route') }}"
+        >Algorithm Comparison</a
+      >
+      <a href="{{ url_for('genetic_visualization') }}" class="active"
+        >Genetic Algorithm Demo</a
+      >
+    </nav>
     <div class="container">
-        <div class="header">
-            <h1>🧬 Genetic Algorithm Visualization</h1>
-            <p>Step-by-step breakdown of how the genetic algorithm works for meal planning</p>
+      <div style="padding: 20px 40px">
+        <p
+          style="
+            font-size: 1.1em;
+            color: #6b7c4f;
+            text-align: center;
+            margin: 20px 0;
+          "
+        >
+          Detailed step-by-step breakdown with examples and scoring mechanism
+        </p>
+      </div>
+
+      <div class="step-container">
+        <!-- Step 1: Generate All Possible Combinations -->
+        <div class="step">
+          <div class="step-header">
+            Step 1: Generate All Possible Meal Combinations
+          </div>
+          <div class="step-content">
+            <h4>🍽️ Available Food Options (Example Dataset):</h4>
+
+            <div
+              style="
+                background: #f0f8ff;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 15px 0;
+              "
+            >
+              <h5>📊 What's in Each Excel File:</h5>
+              <ul>
+                <li>
+                  <strong>Breakfast_Adjusted_Max.xlsx:</strong> 5 food
+                  combinations
+                </li>
+                <li>
+                  <strong>Lunch_Adjusted_Max.xlsx:</strong> 5 food combinations
+                </li>
+                <li>
+                  <strong>Dinner_Adjusted_Max.xlsx:</strong> 5 food combinations
+                </li>
+              </ul>
+            </div>
+
+            <div
+              style="
+                background: #fff3e0;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 15px 0;
+              "
+            >
+              <h5>🍳 Example Breakfast Options:</h5>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                  gap: 10px;
+                "
+              >
+                <div
+                  style="
+                    background: white;
+                    padding: 10px;
+                    border-radius: 6px;
+                    border: 1px solid #ddd;
+                    text-align: center;
+                  "
+                >
+                  <h6>Oats with Milk</h6>
+                  <p>Base: 300 cal, 12g protein</p>
+                </div>
+                <div
+                  style="
+                    background: white;
+                    padding: 10px;
+                    border-radius: 6px;
+                    border: 1px solid #ddd;
+                    text-align: center;
+                  "
+                >
+                  <h6>Poha with Vegetables</h6>
+                  <p>Base: 250 cal, 8g protein</p>
+                </div>
+                <div
+                  style="
+                    background: white;
+                    padding: 10px;
+                    border-radius: 6px;
+                    border: 1px solid #ddd;
+                    text-align: center;
+                  "
+                >
+                  <h6>Upma with Nuts</h6>
+                  <p>Base: 280 cal, 10g protein</p>
+                </div>
+                <div
+                  style="
+                    background: white;
+                    padding: 10px;
+                    border-radius: 6px;
+                    border: 1px solid #ddd;
+                    text-align: center;
+                  "
+                >
+                  <h6>Dosa with Chutney</h6>
+                  <p>Base: 320 cal, 9g protein</p>
+                </div>
+                <div
+                  style="
+                    background: white;
+                    padding: 10px;
+                    border-radius: 6px;
+                    border: 1px solid #ddd;
+                    text-align: center;
+                  "
+                >
+                  <h6>Idli Sambar</h6>
+                  <p>Base: 240 cal, 11g protein</p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              style="
+                background: #f0fff0;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 15px 0;
+              "
+            >
+              <h5>📏 Portion Size Multipliers:</h5>
+              <p><strong>Each food combo gets 3 portion sizes:</strong></p>
+              <ul>
+                <li><strong>Small (0.8x):</strong> 80% of base portion</li>
+                <li><strong>Regular (1.0x):</strong> 100% of base portion</li>
+                <li><strong>Large (1.2x):</strong> 120% of base portion</li>
+              </ul>
+
+              <div
+                style="
+                  background: white;
+                  padding: 15px;
+                  border-radius: 6px;
+                  margin: 10px 0;
+                  border: 1px solid #ddd;
+                "
+              >
+                <h6>📝 Example: Oats with Milk Variations</h6>
+                <ul>
+                  <li>
+                    <strong>Small:</strong> 300 × 0.8 = 240 calories, 9.6g
+                    protein
+                  </li>
+                  <li>
+                    <strong>Regular:</strong> 300 × 1.0 = 300 calories, 12g
+                    protein
+                  </li>
+                  <li>
+                    <strong>Large:</strong> 300 × 1.2 = 360 calories, 14.4g
+                    protein
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div
+              style="
+                background: #e3f2fd;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 15px 0;
+              "
+            >
+              <h5>🧮 Total Combinations Calculation:</h5>
+              <p>
+                <strong>Per Meal Type:</strong> 5 food combos × 3 portions = 15
+                combinations each
+              </p>
+              <p>
+                <strong>Total Possible Meal Plans:</strong> 15 × 15 × 15 =
+                <span
+                  style="color: #4facfe; font-weight: bold; font-size: 1.2em"
+                  >3,375 combinations!</span
+                >
+              </p>
+
+              <div
+                style="
+                  background: white;
+                  padding: 15px;
+                  border-radius: 6px;
+                  margin: 10px 0;
+                  border: 1px solid #ddd;
+                "
+              >
+                <h6>📋 Breakdown:</h6>
+                <ul>
+                  <li>
+                    <strong>Breakfast:</strong> 15 combinations (5 foods × 3
+                    portions)
+                  </li>
+                  <li>
+                    <strong>Lunch:</strong> 15 combinations (5 foods × 3
+                    portions)
+                  </li>
+                  <li>
+                    <strong>Dinner:</strong> 15 combinations (5 foods × 3
+                    portions)
+                  </li>
+                  <li>
+                    <strong>Complete Plans:</strong> 15³ = 3,375 unique meal
+                    plans
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
-        
-        <div class="step-container">
-            <!-- Step 1: User Inputs and Target Calculation -->
-            <div class="step">
-                <div class="step-header">
-                    Step 1: User Inputs and Target Calculation
-                </div>
-                <div class="step-content">
-                    <h4>📊 How We Calculate Your Daily Targets:</h4>
-                    
-                    <div style="background: #f0f8ff; padding: 15px; border-radius: 8px; margin: 15px 0;">
-                        <h5>🔢 BMR (Base Metabolic Rate) Formula:</h5>
-                        <p><strong>For Males:</strong> BMR = 10 × weight(kg) + 6.25 × height(cm) - 5 × age + 5</p>
-                        <p><strong>For Females:</strong> BMR = 10 × weight(kg) + 6.25 × height(cm) - 5 × age - 161</p>
-                        <p><em>Example: 10 × 70 + 6.25 × 175 - 5 × 25 + 5 = 1,675 calories</em></p>
-                    </div>
-                    
-                    <div style="background: #f0fff0; padding: 15px; border-radius: 8px; margin: 15px 0;">
-                        <h5>⚡ TDEE (Total Daily Energy Expenditure):</h5>
-                        <p><strong>TDEE = BMR × Activity Level</strong></p>
-                        <ul>
-                            <li><strong>Sedentary:</strong> BMR × 1.53 (office work, no exercise)</li>
-                            <li><strong>Moderate:</strong> BMR × 1.80 (light exercise 3-5 days/week)</li>
-                            <li><strong>Heavy:</strong> BMR × 2.30 (heavy exercise 6-7 days/week)</li>
-                        </ul>
-                        <p><em>Example: 1,675 × 1.80 = 3,015 calories per day</em></p>
-                    </div>
-                    
-                    <div style="background: #fff8f0; padding: 15px; border-radius: 8px; margin: 15px 0;">
-                        <h5>🍖 Macro Distribution Formula:</h5>
-                        <p><strong>Protein:</strong> Max(0.83 × weight, 15% of calories ÷ 4) grams</p>
-                        <p><strong>Carbs:</strong> 60% of calories ÷ 4 grams</p>
-                        <p><strong>Fat:</strong> 25% of calories ÷ 9 grams</p>
-                        <p><em>Example: Protein = Max(58g, 113g) = 113g</em></p>
-                    </div>
-                    
-                    <div style="background: #f8f0ff; padding: 15px; border-radius: 8px; margin: 15px 0;">
-                        <h5>🍽️ How Meal Split Works:</h5>
-                        <p><strong>User sets percentages:</strong> Breakfast {{ meal_split.breakfast }}%, Lunch {{ meal_split.lunch }}%, Dinner {{ meal_split.dinner }}%</p>
-                        <p><strong>Calorie targets per meal:</strong></p>
-                        <ul>
-                            <li>Breakfast: {{ targets.TDEE }} × {{ meal_split.breakfast }}% = {{ (targets.TDEE * meal_split.breakfast / 100)|round }} calories</li>
-                            <li>Lunch: {{ targets.TDEE }} × {{ meal_split.lunch }}% = {{ (targets.TDEE * meal_split.lunch / 100)|round }} calories</li>
-                            <li>Dinner: {{ targets.TDEE }} × {{ meal_split.dinner }}% = {{ (targets.TDEE * meal_split.dinner / 100)|round }} calories</li>
-                        </ul>
-                    </div>
-                    
-                    <div style="background: #ffe0e0; padding: 15px; border-radius: 8px; margin: 15px 0;">
-                        <h5>🎯 Macro Focus ({{ macro_focus }}) Weights:</h5>
-                        <p><strong>How we prioritize macros in scoring:</strong></p>
-                        <ul>
-                            <li><strong>Protein Focus:</strong> Protein weight = 2, Others = 1</li>
-                            <li><strong>Carbs Focus:</strong> Carbs weight = 2, Others = 1</li>
-                            <li><strong>Fat Focus:</strong> Fat weight = 2, Others = 1</li>
-                        </ul>
-                        <p><em>Higher weight = more important in meal selection</em></p>
-                    </div>
-                    
-                    <h4>📋 Your Calculated Targets:</h4>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
-                        <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
-                            <div style="font-size: 1.5em; font-weight: bold; color: #4facfe;">{{ targets.TDEE }}</div>
-                            <div style="font-size: 0.9em; color: #666;">Daily Calories</div>
-                        </div>
-                        <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
-                            <div style="font-size: 1.5em; font-weight: bold; color: #4facfe;">{{ targets.Protein }}g</div>
-                            <div style="font-size: 0.9em; color: #666;">Protein</div>
-                        </div>
-                        <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
-                            <div style="font-size: 1.5em; font-weight: bold; color: #4facfe;">{{ targets.Carbs }}g</div>
-                            <div style="font-size: 0.9em; color: #666;">Carbs</div>
-                        </div>
-                        <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
-                            <div style="font-size: 1.5em; font-weight: bold; color: #4facfe;">{{ targets.Fat }}g</div>
-                            <div style="font-size: 0.9em; color: #666;">Fat</div>
-                        </div>
-                    </div>
-                </div>
+
+        <!-- Step 2: Create 100 Random Plans -->
+        <div class="step">
+          <div class="step-header">Step 2: Create 100 Random Meal Plans</div>
+          <div class="step-content">
+            <h4>🎲 Random Selection Process:</h4>
+
+            <div
+              style="
+                background: #f0f8ff;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 15px 0;
+              "
+            >
+              <h5>📋 How 100 Plans Are Created:</h5>
+              <p><strong>For each of 100 plans:</strong></p>
+              <ol>
+                <li>
+                  <strong>random.choice(15 breakfast combos)</strong> → Pick 1
+                  random breakfast
+                </li>
+                <li>
+                  <strong>random.choice(15 lunch combos)</strong> → Pick 1
+                  random lunch
+                </li>
+                <li>
+                  <strong>random.choice(15 dinner combos)</strong> → Pick 1
+                  random dinner
+                </li>
+                <li>
+                  <strong>Combine into complete meal plan</strong> → Calculate
+                  total macros
+                </li>
+              </ol>
             </div>
 
-            <!-- Step 2: Fitness Scoring -->
-            <div class="step">
-                <div class="step-header">
-                    Step 2: Fitness Scoring - The Heart of the Algorithm
+            <div
+              style="
+                background: #fff3e0;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 15px 0;
+              "
+            >
+              <h5>🔢 Example Random Plans Created:</h5>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr 1fr 1fr;
+                  gap: 15px;
+                "
+              >
+                <div
+                  style="
+                    background: white;
+                    padding: 10px;
+                    border-radius: 6px;
+                    border: 1px solid #ddd;
+                  "
+                >
+                  <h6>Plan 23:</h6>
+                  <p><strong>🍳 B:</strong> Oats (Large) - 360 cal</p>
+                  <p><strong>🍽️ L:</strong> Dal Rice (Regular) - 450 cal</p>
+                  <p><strong>🍖 D:</strong> Paneer Curry (Large) - 480 cal</p>
+                  <p><strong>Total:</strong> 1,290 calories</p>
                 </div>
-                <div class="step-content">
-                    <h4>🧮 How We Score Each Meal Plan (Simple Explanation):</h4>
-                    
-                    <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0;">
-                        <h5>📐 Main Scoring Formula:</h5>
-                        <p><strong>Fitness Score = 5.0 × Calorie Score + Macro Scores + Meal Split Bonus</strong></p>
-                        <p><em>Higher score = better meal plan (closer to your targets)</em></p>
-                    </div>
-                    
-                    <div style="background: #fff3e0; padding: 15px; border-radius: 8px; margin: 15px 0;">
-                        <h5>🎯 1. Calorie Scoring (Most Important - Weight: 5.0):</h5>
-                        <p><strong>How close are total calories to your TDEE target?</strong></p>
-                        <ul>
-                            <li><strong>Perfect (≤5% off):</strong> Score = 1.0 → Contributes 5.0 points</li>
-                            <li><strong>Good (≤10% off):</strong> Score = 0.5 → Contributes 2.5 points</li>
-                            <li><strong>Okay (≤15% off):</strong> Score = 0.2 → Contributes 1.0 points</li>
-                            <li><strong>Poor (>15% off):</strong> Score = 0.0 → Contributes 0.0 points</li>
-                        </ul>
-                        <p><em>Example: If target is 2000 cal and plan has 1950 cal → 2.5% off → Perfect score!</em></p>
-                    </div>
-                    
-                    <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; margin: 15px 0;">
-                        <h5>🍖 2. Macro Scoring (Weight: 0.5 each × Macro Focus):</h5>
-                        <p><strong>Formula for each macro:</strong></p>
-                        <p>Macro Score = Max(0, 1 - |Actual - Target| / Target) × Macro Weight × 0.5</p>
-                        
-                        <h6>Macro Focus Weights:</h6>
-                        <ul>
-                            <li><strong>Protein Focus:</strong> Protein = 2.0, Carbs = 1.0, Fat = 1.0</li>
-                            <li><strong>Carbs Focus:</strong> Protein = 1.0, Carbs = 2.0, Fat = 1.0</li>
-                            <li><strong>Fat Focus:</strong> Protein = 1.0, Carbs = 1.0, Fat = 2.0</li>
-                        </ul>
-                        
-                        <p><em>Example: Target protein = 100g, Actual = 90g, Focus = Protein</em></p>
-                        <p><em>Score = (1 - |90-100|/100) × 2.0 × 0.5 = 0.9 × 2.0 × 0.5 = 0.9 points</em></p>
-                    </div>
-                    
-                    <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; margin: 15px 0;">
-                        <h5>🍽️ 3. Meal Split Bonus (Weight: 1.0):</h5>
-                        <p><strong>How well does the plan follow your meal calorie distribution?</strong></p>
-                        <p>Bonus = Max(0, 1 - (Breakfast_diff + Lunch_diff + Dinner_diff) / 60)</p>
-                        
-                        <p><em>Example: You want 25% breakfast, but plan has 30%</em></p>
-                        <p><em>Difference = |30% - 25%| = 5%</em></p>
-                        <p><em>If total differences = 15%, Bonus = 1 - 15/60 = 0.75 points</em></p>
-                    </div>
+                <div
+                  style="
+                    background: white;
+                    padding: 10px;
+                    border-radius: 6px;
+                    border: 1px solid #ddd;
+                  "
+                >
+                  <h6>Plan 67:</h6>
+                  <p><strong>🍳 B:</strong> Poha (Small) - 200 cal</p>
+                  <p><strong>🍽️ L:</strong> Rajma (Large) - 540 cal</p>
+                  <p><strong>🍖 D:</strong> Fish Curry (Regular) - 420 cal</p>
+                  <p><strong>Total:</strong> 1,160 calories</p>
                 </div>
+                <div
+                  style="
+                    background: white;
+                    padding: 10px;
+                    border-radius: 6px;
+                    border: 1px solid #ddd;
+                  "
+                >
+                  <h6>Plan 91:</h6>
+                  <p><strong>🍳 B:</strong> Dosa (Regular) - 320 cal</p>
+                  <p><strong>🍽️ L:</strong> Biryani (Large) - 720 cal</p>
+                  <p><strong>🍖 D:</strong> Mixed Veg (Small) - 320 cal</p>
+                  <p><strong>Total:</strong> 1,360 calories</p>
+                </div>
+              </div>
             </div>
 
-            <!-- Step 3: Available Meal Options -->
-            <div class="step">
-                <div class="step-header">
-                    Step 3: Available Meal Options (Top 10 each)
-                </div>
-                <div class="step-content">
-                    <h4>🍳 Breakfast Options:</h4>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
-                        {% for meal in bfast_combos %}
-                        <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; text-align: center;">
-                            <h5 style="margin: 0 0 10px 0; color: #333;">{{ meal.name }}</h5>
-                            <div style="font-weight: bold; color: #4facfe; font-size: 1.2em;">{{ meal.calories }} cal</div>
-                            <div style="font-size: 0.9em; color: #666; margin-top: 5px;">P: {{ meal.protein }}g | C: {{ meal.carbs }}g | F: {{ meal.fat }}g</div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    
-                    <h4>🍽️ Lunch Options:</h4>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
-                        {% for meal in lunch_combos %}
-                        <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; text-align: center;">
-                            <h5 style="margin: 0 0 10px 0; color: #333;">{{ meal.name }}</h5>
-                            <div style="font-weight: bold; color: #4facfe; font-size: 1.2em;">{{ meal.calories }} cal</div>
-                            <div style="font-size: 0.9em; color: #666; margin-top: 5px;">P: {{ meal.protein }}g | C: {{ meal.carbs }}g | F: {{ meal.fat }}g</div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    
-                    <h4>🍖 Dinner Options:</h4>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
-                        {% for meal in dinner_combos %}
-                        <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; text-align: center;">
-                            <h5 style="margin: 0 0 10px 0; color: #333;">{{ meal.name }}</h5>
-                            <div style="font-weight: bold; color: #4facfe; font-size: 1.2em;">{{ meal.calories }} cal</div>
-                            <div style="font-size: 0.9em; color: #666; margin-top: 5px;">P: {{ meal.protein }}g | C: {{ meal.carbs }}g | F: {{ meal.fat }}g</div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
+            <div
+              style="
+                background: #e3f2fd;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 15px 0;
+              "
+            >
+              <h5>🎯 Equal Probability Selection:</h5>
+              <ul>
+                <li>
+                  <strong>Each breakfast combo:</strong> 1/15 = 6.67% chance
+                </li>
+                <li><strong>Each lunch combo:</strong> 1/15 = 6.67% chance</li>
+                <li><strong>Each dinner combo:</strong> 1/15 = 6.67% chance</li>
+                <li>
+                  <strong>Best and worst:</strong> Exactly same selection
+                  probability!
+                </li>
+              </ul>
 
-            <!-- Step 4: Generated Plans -->
-            <div class="step">
-                <div class="step-header">
-                    Step 4: Generated Meal Plans (20 Random Examples)
-                </div>
-                <div class="step-content">
-                    <h4>🎲 Sample Plans Generated by Algorithm:</h4>
-                    <p><em>These are examples of the meal combinations the genetic algorithm would evaluate and optimize.</em></p>
-                    
-                    <div id="generated-plans" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; margin: 20px 0;">
-                        <!-- Plans will be populated by JavaScript -->
-                    </div>
-                    
-                    <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0;">
-                        <h5>📊 Total Possible Combinations:</h5>
-                        <p><strong>10 × 10 × 10 = 1,000 possible meal plans</strong></p>
-                        <p>The genetic algorithm intelligently searches through these combinations to find the best 20 plans that match your nutritional targets!</p>
-                    </div>
-                </div>
+              <div
+                style="
+                  background: white;
+                  padding: 15px;
+                  border-radius: 6px;
+                  margin: 10px 0;
+                  border: 1px solid #ddd;
+                "
+              >
+                <h6>📈 Result Distribution:</h6>
+                <p>Out of 100 random plans:</p>
+                <ul>
+                  <li>
+                    <strong>~10-15 plans:</strong> Excellent (lucky good
+                    combinations)
+                  </li>
+                  <li>
+                    <strong>~70-80 plans:</strong> Average/mediocre quality
+                  </li>
+                  <li>
+                    <strong>~10-15 plans:</strong> Poor (unlucky bad
+                    combinations)
+                  </li>
+                </ul>
+              </div>
             </div>
-
-            <!-- Step 5: Genetic Algorithm Process -->
-            <div class="step">
-                <div class="step-header">
-                    Step 5: Genetic Algorithm Evolution Process
-                </div>
-                <div class="step-content">
-                    <h4>🔄 The Complete Evolution Process:</h4>
-                    
-                    <div style="background: #f0f8ff; padding: 15px; border-radius: 8px; margin: 15px 0;">
-                        <h5>📈 What Happens Each Generation:</h5>
-                        <ol>
-                            <li><strong>Score all 100 plans</strong> using our fitness formula</li>
-                            <li><strong>Select top 20 as elite</strong> (survive unchanged)</li>
-                            <li><strong>Select top 70 as breeders</strong> (can reproduce)</li>
-                            <li><strong>Create 80 new plans</strong> through crossover</li>
-                            <li><strong>Apply 5% mutation rate</strong> to non-elite plans</li>
-                            <li><strong>Form next generation</strong> of 100 plans</li>
-                        </ol>
-                    </div>
-                    
-                    <div style="background: #fff8f0; padding: 15px; border-radius: 8px; margin: 15px 0;">
-                        <h5>🎯 Why This Works (Simple Explanation):</h5>
-                        <ul>
-                            <li><strong>Best plans survive:</strong> Elite plans pass good traits to next generation</li>
-                            <li><strong>Good plans breed:</strong> Crossover combines successful meal combinations</li>
-                            <li><strong>Mutations add variety:</strong> Prevents getting stuck with similar plans</li>
-                            <li><strong>Bad plans disappear:</strong> Low-scoring plans are naturally eliminated</li>
-                        </ul>
-                        <p><em>Like natural evolution, but for meal plans!</em></p>
-                    </div>
-                    
-                    <div style="background: #f0fff0; padding: 15px; border-radius: 8px; margin: 15px 0;">
-                        <h5>📊 Algorithm Parameters (What We Actually Use):</h5>
-                        <ul>
-                            <li><strong>Population Size:</strong> 100 plans per generation</li>
-                            <li><strong>Generations:</strong> 50 iterations</li>
-                            <li><strong>Elite Rate:</strong> Top 20% survive unchanged</li>
-                            <li><strong>Breeding Pool:</strong> Top 70% can reproduce</li>
-                            <li><strong>Mutation Rate:</strong> 5% of non-elite plans</li>
-                            <li><strong>Total Evaluations:</strong> 100 × 50 = 5,000 meal plans tested!</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="navigation">
-                <a href="/" class="btn">← Back to Meal Planner</a>
-                <a href="/compare" class="btn">Compare Algorithms</a>
-            </div>
+          </div>
         </div>
+
+        <!-- Step 3: Score All 100 Plans -->
+        <div class="step">
+          <div class="step-header">
+            Step 3: Score All 100 Plans - Detailed Scoring Mechanism
+          </div>
+          <div class="step-content">
+            <h4>🧮 Super Easy Scoring Explanation:</h4>
+
+            <div
+              style="
+                background: #f0f8ff;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 15px 0;
+              "
+            >
+              <h5>📊 User Example (Sarah):</h5>
+              <ul>
+                <li><strong>Daily Target:</strong> 1800 calories</li>
+                <li>
+                  <strong>Protein Target:</strong> 90g (Protein Focus = 2x
+                  weight)
+                </li>
+                <li>
+                  <strong>Carbs Target:</strong> 270g (Normal weight = 1x)
+                </li>
+                <li><strong>Fat Target:</strong> 50g (Normal weight = 1x)</li>
+                <li>
+                  <strong>Meal Split:</strong> 25% breakfast, 40% lunch, 35%
+                  dinner
+                </li>
+              </ul>
+            </div>
+
+            <div
+              style="
+                background: #fff8f0;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 15px 0;
+              "
+            >
+              <h5>📝 Example: Scoring Plan 23</h5>
+              <p>
+                <strong>Plan 23:</strong> Oats (Large) + Dal Rice (Regular) +
+                Paneer Curry (Large)
+              </p>
+              <p>
+                <strong>Totals:</strong> 1,290 calories, 65g protein, 180g
+                carbs, 35g fat
+              </p>
+
+              <div
+                style="
+                  background: white;
+                  padding: 15px;
+                  border-radius: 6px;
+                  margin: 10px 0;
+                  border: 1px solid #ddd;
+                "
+              >
+                <h6>Meal Split Check:</h6>
+                <ul>
+                  <li>
+                    <strong>Breakfast:</strong> 360 cal = 360/1290 = 27.9%
+                    (Target: 25%)
+                  </li>
+                  <li>
+                    <strong>Lunch:</strong> 450 cal = 450/1290 = 34.9% (Target:
+                    40%)
+                  </li>
+                  <li>
+                    <strong>Dinner:</strong> 480 cal = 480/1290 = 37.2% (Target:
+                    35%)
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div
+              style="
+                background: #e3f2fd;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 15px 0;
+              "
+            >
+              <h5>🎯 1. Calorie Score (5 Points Max):</h5>
+              <div
+                style="
+                  background: white;
+                  padding: 15px;
+                  border-radius: 6px;
+                  margin: 10px 0;
+                  border: 1px solid #ddd;
+                "
+              >
+                <p>
+                  <strong>Step 1:</strong> Calculate deviation = |1290 - 1800| ÷
+                  1800 = 510 ÷ 1800 = 0.283 = 28.3%
+                </p>
+                <p><strong>Step 2:</strong> Check scoring rules:</p>
+                <ul>
+                  <li>≤5% deviation → 5.0 points</li>
+                  <li>≤10% deviation → 2.5 points</li>
+                  <li>≤15% deviation → 1.0 points</li>
+                  <li>>15% deviation → 0.0 points</li>
+                </ul>
+                <p>
+                  <strong>Result:</strong> 28.3% > 15% →
+                  <span style="color: red; font-weight: bold">0.0 points</span>
+                  ❌
+                </p>
+              </div>
+            </div>
+
+            <div
+              style="
+                background: #f3e5f5;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 15px 0;
+              "
+            >
+              <h5>🍖 2. Macro Scores (1.5 Points Max Total):</h5>
+
+              <div
+                style="
+                  background: white;
+                  padding: 15px;
+                  border-radius: 6px;
+                  margin: 10px 0;
+                  border: 1px solid #ddd;
+                "
+              >
+                <h6>Protein Score (2x weight):</h6>
+                <p>
+                  <strong>Step 1:</strong> Accuracy = 1 - |65-90|/90 = 1 - 25/90
+                  = 1 - 0.278 = 0.722 (72.2% accurate)
+                </p>
+                <p>
+                  <strong>Step 2:</strong> Score = 0.722 × 2.0 × 0.5 =
+                  <span style="color: orange; font-weight: bold"
+                    >0.72 points</span
+                  >
+                </p>
+              </div>
+
+              <div
+                style="
+                  background: white;
+                  padding: 15px;
+                  border-radius: 6px;
+                  margin: 10px 0;
+                  border: 1px solid #ddd;
+                "
+              >
+                <h6>Carbs Score (1x weight):</h6>
+                <p>
+                  <strong>Step 1:</strong> Accuracy = 1 - |180-270|/270 = 1 -
+                  90/270 = 1 - 0.333 = 0.667 (66.7% accurate)
+                </p>
+                <p>
+                  <strong>Step 2:</strong> Score = 0.667 × 1.0 × 0.5 =
+                  <span style="color: orange; font-weight: bold"
+                    >0.33 points</span
+                  >
+                </p>
+              </div>
+
+              <div
+                style="
+                  background: white;
+                  padding: 15px;
+                  border-radius: 6px;
+                  margin: 10px 0;
+                  border: 1px solid #ddd;
+                "
+              >
+                <h6>Fat Score (1x weight):</h6>
+                <p>
+                  <strong>Step 1:</strong> Accuracy = 1 - |35-50|/50 = 1 - 15/50
+                  = 1 - 0.30 = 0.70 (70% accurate)
+                </p>
+                <p>
+                  <strong>Step 2:</strong> Score = 0.70 × 1.0 × 0.5 =
+                  <span style="color: orange; font-weight: bold"
+                    >0.35 points</span
+                  >
+                </p>
+              </div>
+            </div>
+
+            <div
+              style="
+                background: #e8f5e8;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 15px 0;
+              "
+            >
+              <h5>🍽️ 3. Meal Split Score (1 Point Max):</h5>
+              <div
+                style="
+                  background: white;
+                  padding: 15px;
+                  border-radius: 6px;
+                  margin: 10px 0;
+                  border: 1px solid #ddd;
+                "
+              >
+                <p>
+                  <strong>Step 1:</strong> Calculate differences from target:
+                </p>
+                <ul>
+                  <li>Breakfast: |27.9% - 25%| = 2.9%</li>
+                  <li>Lunch: |34.9% - 40%| = 5.1%</li>
+                  <li>Dinner: |37.2% - 35%| = 2.2%</li>
+                </ul>
+                <p>
+                  <strong>Step 2:</strong> Total difference = 2.9 + 5.1 + 2.2 =
+                  10.2%
+                </p>
+                <p>
+                  <strong>Step 3:</strong> Score = Max(0, 1 - 10.2/60) = 1 -
+                  0.17 =
+                  <span style="color: green; font-weight: bold"
+                    >0.83 points</span
+                  >
+                </p>
+              </div>
+            </div>
+
+            <div
+              style="
+                background: #ffe0e0;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 15px 0;
+              "
+            >
+              <h5>🏆 Final Score for Plan 23:</h5>
+              <p>
+                <strong
+                  >Total = 0.0 + 0.72 + 0.33 + 0.35 + 0.83 = 2.23 points</strong
+                >
+              </p>
+              <p>
+                <em
+                  >This is a <strong>poor plan</strong> due to very low
+                  calories!</em
+                >
+              </p>
+
+              <div
+                style="
+                  background: white;
+                  padding: 15px;
+                  border-radius: 6px;
+                  margin: 10px 0;
+                  border: 1px solid #ddd;
+                "
+              >
+                <h6>📈 After Scoring All 100 Plans:</h6>
+                <ul>
+                  <li>
+                    <strong>Plan 67:</strong> 6.85 points (Rank 1 - Elite 🏆)
+                  </li>
+                  <li>
+                    <strong>Plan 23:</strong> 2.23 points (Rank 78 - Dies off
+                    ❌)
+                  </li>
+                  <li>
+                    <strong>Plan 91:</strong> 4.12 points (Rank 35 - Breeder 🧬)
+                  </li>
+                </ul>
+                <p><strong>Selection Result:</strong></p>
+                <ul>
+                  <li><strong>Top 20:</strong> Elite (survive unchanged)</li>
+                  <li>
+                    <strong>Ranks 21-70:</strong> Breeders (can reproduce)
+                  </li>
+                  <li><strong>Bottom 30:</strong> Eliminated (die off)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Selection & Crossover -->
+        <div class="step">
+          <div class="step-header">
+            Step 4: Selection & Crossover (Creating Baby Plans)
+          </div>
+          <div class="step-content">
+            <h4>🧠 Selection Process (From Our 100 Scored Plans):</h4>
+
+            <div
+              style="
+                background: #f0f8ff;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 15px 0;
+              "
+            >
+              <h5>🏆 After Sorting by Score (High to Low):</h5>
+              <div
+                style="
+                  background: white;
+                  padding: 15px;
+                  border-radius: 6px;
+                  margin: 10px 0;
+                  border: 1px solid #ddd;
+                "
+              >
+                <ul>
+                  <li>
+                    <strong>Ranks 1-20:</strong> Elite (scores 6.0-8.0) →
+                    Survive unchanged 🏆
+                  </li>
+                  <li>
+                    <strong>Ranks 21-70:</strong> Breeders (scores 3.0-5.9) →
+                    Can reproduce 🧬
+                  </li>
+                  <li>
+                    <strong>Ranks 71-100:</strong> Eliminated (scores 0.0-2.9) →
+                    Die off ❌
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div
+              style="
+                background: #fff3e0;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 15px 0;
+              "
+            >
+              <h5>👶 Crossover Process (Making 80 Babies):</h5>
+
+              <h6>For Each of 80 Babies:</h6>
+              <ol>
+                <li>
+                  <strong>random.choice(top_70_breeders)</strong> → Pick Parent
+                  1
+                </li>
+                <li>
+                  <strong>random.choice(top_70_breeders)</strong> → Pick Parent
+                  2
+                </li>
+                <li>
+                  <strong>Fixed Pattern:</strong> Breakfast from P1, Lunch from
+                  P2, Dinner from P1
+                </li>
+                <li>
+                  <strong>Calculate new totals</strong> → Complete baby plan
+                  ready
+                </li>
+              </ol>
+
+              <div
+                style="
+                  background: white;
+                  padding: 15px;
+                  border-radius: 6px;
+                  margin: 15px 0;
+                  border: 1px solid #ddd;
+                "
+              >
+                <h6>📝 Example Baby Creation:</h6>
+                <div
+                  style="
+                    display: grid;
+                    grid-template-columns: 1fr auto 1fr auto 1fr;
+                    gap: 10px;
+                    align-items: center;
+                    margin: 10px 0;
+                  "
+                >
+                  <div
+                    style="
+                      background: #e3f2fd;
+                      padding: 10px;
+                      border-radius: 6px;
+                    "
+                  >
+                    <h6>Parent 1 (Rank 12)</h6>
+                    <p>🍳 Oats (Large) - 360 cal</p>
+                    <p>🍽️ Dal Rice (Regular) - 450 cal</p>
+                    <p>🍖 Paneer Curry (Large) - 480 cal</p>
+                    <p><strong>Score: 5.8</strong></p>
+                  </div>
+                  <div style="font-size: 1.5em">+</div>
+                  <div
+                    style="
+                      background: #f3e5f5;
+                      padding: 10px;
+                      border-radius: 6px;
+                    "
+                  >
+                    <h6>Parent 2 (Rank 25)</h6>
+                    <p>🍳 Poha (Small) - 200 cal</p>
+                    <p>🍽️ Rajma (Large) - 540 cal</p>
+                    <p>🍖 Fish Curry (Regular) - 420 cal</p>
+                    <p><strong>Score: 4.9</strong></p>
+                  </div>
+                  <div style="font-size: 1.5em">=</div>
+                  <div
+                    style="
+                      background: #e8f5e8;
+                      padding: 10px;
+                      border-radius: 6px;
+                    "
+                  >
+                    <h6>Baby Plan 👶</h6>
+                    <p>🍳 Oats (Large) - 360 cal ← P1</p>
+                    <p>🍽️ Rajma (Large) - 540 cal ← P2</p>
+                    <p>🍖 Paneer Curry (Large) - 480 cal ← P1</p>
+                    <p><strong>New Total: 1,380 cal</strong></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              style="
+                background: #e3f2fd;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 15px 0;
+              "
+            >
+              <h5>🔄 After Crossover - New Population:</h5>
+              <div
+                style="
+                  background: white;
+                  padding: 15px;
+                  border-radius: 6px;
+                  margin: 10px 0;
+                  border: 1px solid #ddd;
+                "
+              >
+                <ul>
+                  <li>
+                    <strong>20 Elite plans:</strong> Unchanged (guaranteed to be
+                    good)
+                  </li>
+                  <li>
+                    <strong>80 Baby plans:</strong> New combinations (inherit
+                    good traits)
+                  </li>
+                  <li><strong>Total:</strong> 100 plans ready for next step</li>
+                </ul>
+
+                <h6>Why This Works:</h6>
+                <ul>
+                  <li>
+                    <strong>Good genes survive:</strong> Only top-scoring plans
+                    can reproduce
+                  </li>
+                  <li>
+                    <strong>New combinations:</strong> Babies mix successful
+                    meal choices
+                  </li>
+                  <li>
+                    <strong>Variety maintained:</strong> 80 different parent
+                    pairs = 80 unique babies
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5: Mutation & Iteration -->
+        <div class="step">
+          <div class="step-header">
+            Step 5: Mutation & Iteration (50 Generations)
+          </div>
+          <div class="step-content">
+            <h4>🧬 Mutation Process (Adding Random Changes):</h4>
+
+            <div
+              style="
+                background: #fff8f0;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 15px 0;
+              "
+            >
+              <h5>🎲 5% Mutation Rate Explained:</h5>
+
+              <h6>For Each of the 80 Baby Plans:</h6>
+              <ol>
+                <li>
+                  <strong>random.random() generates 0.0-1.0</strong> → If <
+                  0.05, mutate!
+                </li>
+                <li>
+                  <strong
+                    >random.choice(["breakfast", "lunch", "dinner"])</strong
+                  >
+                  → Pick which meal
+                </li>
+                <li>
+                  <strong>random.choice(15_original_combos)</strong> → Replace
+                  with any combo
+                </li>
+                <li>
+                  <strong>Recalculate totals</strong> → Update plan macros
+                </li>
+              </ol>
+
+              <div
+                style="
+                  background: white;
+                  padding: 15px;
+                  border-radius: 6px;
+                  margin: 15px 0;
+                  border: 1px solid #ddd;
+                "
+              >
+                <h6>📈 Expected Mutations per Generation:</h6>
+                <p>
+                  <strong
+                    >80 babies × 5% = ~4 babies get mutated each
+                    generation</strong
+                  >
+                </p>
+                <ul>
+                  <li>
+                    Baby 15: random.random() = 0.03 →
+                    <strong>MUTATE!</strong> ✅
+                  </li>
+                  <li>
+                    Baby 42: random.random() = 0.02 →
+                    <strong>MUTATE!</strong> ✅
+                  </li>
+                  <li>Baby 67: random.random() = 0.78 → No mutation</li>
+                  <li>
+                    Baby 80: random.random() = 0.01 →
+                    <strong>MUTATE!</strong> ✅
+                  </li>
+                </ul>
+              </div>
+
+              <div
+                style="
+                  background: white;
+                  padding: 15px;
+                  border-radius: 6px;
+                  margin: 15px 0;
+                  border: 1px solid #ddd;
+                "
+              >
+                <h6>📝 Mutation Example - Baby 15:</h6>
+                <div
+                  style="
+                    display: grid;
+                    grid-template-columns: 1fr auto 1fr;
+                    gap: 15px;
+                    align-items: center;
+                  "
+                >
+                  <div
+                    style="
+                      background: #e8f5e8;
+                      padding: 10px;
+                      border-radius: 6px;
+                    "
+                  >
+                    <h6>Before Mutation:</h6>
+                    <p>🍳 Oats (Large) - 360 cal</p>
+                    <p>🍽️ Rajma (Large) - 540 cal</p>
+                    <p>🍖 Paneer Curry (Large) - 480 cal</p>
+                    <p><strong>Total: 1,380 cal</strong></p>
+                  </div>
+                  <div style="font-size: 2em">→</div>
+                  <div
+                    style="
+                      background: #ffe0e0;
+                      padding: 10px;
+                      border-radius: 6px;
+                    "
+                  >
+                    <h6>After Mutation (Lunch):</h6>
+                    <p>🍳 Oats (Large) - 360 cal</p>
+                    <p>
+                      🍽️ <strong>Biryani (Small) - 576 cal</strong> ← Random!
+                    </p>
+                    <p>🍖 Paneer Curry (Large) - 480 cal</p>
+                    <p><strong>Total: 1,416 cal</strong></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              style="
+                background: #f0fff0;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 15px 0;
+              "
+            >
+              <h5>🔄 Complete 50-Generation Process:</h5>
+
+              <div
+                style="
+                  background: white;
+                  padding: 15px;
+                  border-radius: 6px;
+                  margin: 10px 0;
+                  border: 1px solid #ddd;
+                "
+              >
+                <h6>Each Generation Cycle (Steps 2-3-4-5):</h6>
+                <ol>
+                  <li>
+                    <strong>Step 2:</strong> Score all 100 current plans (using
+                    our detailed scoring)
+                  </li>
+                  <li>
+                    <strong>Step 3:</strong> Select top 20 elite + top 70
+                    breeders
+                  </li>
+                  <li>
+                    <strong>Step 4:</strong> Create 80 babies through crossover
+                    (P1-P2-P1 pattern)
+                  </li>
+                  <li><strong>Step 5:</strong> Mutate ~4 babies randomly</li>
+                  <li>
+                    <strong>Result:</strong> New generation of 100 plans ready
+                    for next cycle
+                  </li>
+                </ol>
+              </div>
+
+              <div
+                style="
+                  background: white;
+                  padding: 15px;
+                  border-radius: 6px;
+                  margin: 10px 0;
+                  border: 1px solid #ddd;
+                "
+              >
+                <h6>📈 Evolution Timeline:</h6>
+                <ul>
+                  <li>
+                    <strong>Generations 1-15:</strong> Wild variety, average
+                    scores improve slowly
+                  </li>
+                  <li>
+                    <strong>Generations 16-35:</strong> Population starts
+                    converging, big score jumps
+                  </li>
+                  <li>
+                    <strong>Generations 36-50:</strong> Fine-tuning phase, most
+                    plans score well
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div
+              style="
+                background: #e3f2fd;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 15px 0;
+              "
+            >
+              <h5>🏆 Final Algorithm Results:</h5>
+              <div
+                style="
+                  background: white;
+                  padding: 15px;
+                  border-radius: 6px;
+                  margin: 10px 0;
+                  border: 1px solid #ddd;
+                "
+              >
+                <ul>
+                  <li>
+                    <strong>Total work done:</strong> 100 plans × 50 generations
+                    = 5,000 meal plans evaluated!
+                  </li>
+                  <li>
+                    <strong>Algorithm output:</strong> Best 100 plans from final
+                    generation (all high-scoring)
+                  </li>
+                  <li>
+                    <strong>User receives:</strong> Top 20 unique meal plans
+                    with highest fitness scores
+                  </li>
+                  <li>
+                    <strong>Quality guarantee:</strong> Plans are optimized for
+                    your exact nutritional targets
+                  </li>
+                </ul>
+
+                <h6>🎆 Why It Works So Well:</h6>
+                <ul>
+                  <li>
+                    <strong>Natural selection:</strong> Only good plans survive
+                    and reproduce
+                  </li>
+                  <li>
+                    <strong>Genetic mixing:</strong> Best traits combine in new
+                    ways
+                  </li>
+                  <li>
+                    <strong>Controlled randomness:</strong> Mutations prevent
+                    getting stuck
+                  </li>
+                  <li>
+                    <strong>Massive search:</strong> Explores thousands of
+                    combinations intelligently
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="navigation">
+          <a href="/" class="btn">← Back to Meal Planner</a>
+          <a href="/compare" class="btn">Compare Algorithms</a>
+        </div>
+      </div>
     </div>
-    
+
     <script>
-        // Generate example data for visualization
-        const bfastCombos = {{ bfast_combos | tojson }};
-        const lunchCombos = {{ lunch_combos | tojson }};
-        const dinnerCombos = {{ dinner_combos | tojson }};
-        const targets = {{ targets | tojson }};
-        
-        // Generate 20 random meal plans
-        function generateSamplePlans() {
-            const plans = [];
-            const planContainer = document.getElementById('generated-plans');
-            
-            for (let i = 0; i < 20; i++) {
-                const bfast = bfastCombos[Math.floor(Math.random() * bfastCombos.length)];
-                const lunch = lunchCombos[Math.floor(Math.random() * lunchCombos.length)];
-                const dinner = dinnerCombos[Math.floor(Math.random() * dinnerCombos.length)];
-                
-                const totalCalories = bfast.calories + lunch.calories + dinner.calories;
-                const totalProtein = bfast.protein + lunch.protein + dinner.protein;
-                const totalCarbs = bfast.carbs + lunch.carbs + dinner.carbs;
-                const totalFat = bfast.fat + lunch.fat + dinner.fat;
-                
-                // Calculate fitness score (simplified)
-                const calorieDev = Math.abs(totalCalories - targets.TDEE) / targets.TDEE;
-                const proteinDev = Math.abs(totalProtein - targets.Protein) / targets.Protein;
-                const carbsDev = Math.abs(totalCarbs - targets.Carbs) / targets.Carbs;
-                const fatDev = Math.abs(totalFat - targets.Fat) / targets.Fat;
-                
-                const caloriePenalty = calorieDev * 30;
-                const macroPenalty = (proteinDev + carbsDev + fatDev) * 20;
-                const fitnessScore = Math.max(0, 100 - (caloriePenalty + macroPenalty));
-                
-                const plan = {
-                    id: i + 1,
-                    breakfast: bfast,
-                    lunch: lunch,
-                    dinner: dinner,
-                    totalCalories,
-                    totalProtein,
-                    totalCarbs,
-                    totalFat,
-                    fitnessScore: fitnessScore.toFixed(1)
-                };
-                
-                plans.push(plan);
-            }
-            
-            // Sort by fitness score
-            plans.sort((a, b) => b.fitnessScore - a.fitnessScore);
-            
-            // Display plans
-            plans.forEach((plan, index) => {
-                const planDiv = document.createElement('div');
-                planDiv.style.cssText = `
-                    background: ${index < 5 ? '#d4edda' : '#f8f9fa'};
-                    border: 2px solid ${index < 5 ? '#28a745' : '#dee2e6'};
-                    border-radius: 10px;
-                    padding: 20px;
-                    position: relative;
-                `;
-                
-                planDiv.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                        <h4 style="margin: 0; color: #333;">Plan ${plan.id} ${index < 5 ? '🏆' : ''}</h4>
-                        <div style="background: ${index < 5 ? '#28a745' : '#007BFF'}; color: white; padding: 5px 10px; border-radius: 15px; font-weight: bold;">
-                            Score: ${plan.fitnessScore}
-                        </div>
-                    </div>
-                    
-                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px;">
-                        <div style="background: white; padding: 10px; border-radius: 6px; text-align: center;">
-                            <div style="font-weight: bold; color: #333; margin-bottom: 5px;">🍳 Breakfast</div>
-                            <div style="font-size: 0.9em; color: #666;">${plan.breakfast.name}</div>
-                            <div style="color: #4facfe; font-weight: bold;">${plan.breakfast.calories} cal</div>
-                        </div>
-                        <div style="background: white; padding: 10px; border-radius: 6px; text-align: center;">
-                            <div style="font-weight: bold; color: #333; margin-bottom: 5px;">🍽️ Lunch</div>
-                            <div style="font-size: 0.9em; color: #666;">${plan.lunch.name}</div>
-                            <div style="color: #4facfe; font-weight: bold;">${plan.lunch.calories} cal</div>
-                        </div>
-                        <div style="background: white; padding: 10px; border-radius: 6px; text-align: center;">
-                            <div style="font-weight: bold; color: #333; margin-bottom: 5px;">🍖 Dinner</div>
-                            <div style="font-size: 0.9em; color: #666;">${plan.dinner.name}</div>
-                            <div style="color: #4facfe; font-weight: bold;">${plan.dinner.calories} cal</div>
-                        </div>
-                    </div>
-                    
-                    <div style="background: #e3f2fd; border-radius: 6px; padding: 10px;">
-                        <div style="font-size: 1.2em; font-weight: bold; color: #1976d2; text-align: center;">
-                            Total: ${plan.totalCalories} calories
-                        </div>
-                        <div style="font-size: 0.9em; color: #666; margin-top: 5px; text-align: center;">
-                            P: ${plan.totalProtein}g | C: ${plan.totalCarbs}g | F: ${plan.totalFat}g
-                        </div>
-                        <div style="font-size: 0.8em; color: #666; margin-top: 5px; text-align: center;">
-                            Accuracy: ${((plan.totalCalories / targets.TDEE) * 100).toFixed(1)}% of target calories
-                        </div>
-                    </div>
-                `;
-                
-                planContainer.appendChild(planDiv);
-            });
-        }
-        
-        // Generate plans when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            generateSamplePlans();
-        });
+      // Simple script for any interactive elements if needed in the future
+      console.log("Genetic Algorithm 5-Step Visualization Loaded");
     </script>
-</body>
+  </body>
 </html>

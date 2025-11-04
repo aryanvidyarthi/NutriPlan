@@ -1,101 +1,417 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Algorithm Comparison - Indian Meal Recommendation</title>
-<style>
-    body { font-family: Arial, sans-serif; margin: 0; background: #f8f9fa; color: #333; }
-    header { background: #007BFF; color: white; padding: 15px; text-align: center; }
-    nav { background: #0056b3; padding: 10px; display: flex; justify-content: center; }
-    nav a { color: white; text-decoration: none; margin: 0 15px; font-weight: bold; }
-    nav a:hover { text-decoration: underline; }
-    main { max-width: 1200px; margin: 20px auto; background: white; padding: 20px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-    h2 { color: #007BFF; border-bottom: 2px solid #eee; padding-bottom: 4px; }
-    table { border-collapse: collapse; width: 100%; margin: 15px 0; }
-    th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
-    th { background: #f1f1f1; font-weight: bold; }
-    .metric-box { background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 4px; border-left: 4px solid #007BFF; }
-    .btn { padding: 8px 14px; background: #28a745; color: white; border: none; cursor: pointer; border-radius: 4px; margin: 5px; }
-    .btn:hover { background: #218838; }
-    .btn-primary { background: #007BFF; }
-    .btn-primary:hover { background: #0056b3; }
-</style>
-</head>
-<body>
-<header>
-    <h1>Algorithm Comparison Results</h1>
-</header>
-<nav>
-    <a href="{{ url_for('index') }}">Home</a>
-    <a href="{{ url_for('compare_algorithms_route') }}">Algorithm Comparison</a>
-    <a href="{{ url_for('genetic_visualization') }}">Genetic Algorithm Demo</a>
-</nav>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Algorithm Comparison - NutriPlan</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #f5f7f0 0%, #e8ede0 100%);
+        color: #3d4a2c;
+        min-height: 100vh;
+      }
+      header {
+        background: linear-gradient(135deg, #6b7c4f 0%, #8b9d6a 100%);
+        color: white;
+        padding: 30px 20px;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(107, 124, 79, 0.3);
+      }
+      header h1 {
+        font-size: 2.5em;
+        font-weight: 700;
+        margin-bottom: 8px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+      header .subtitle {
+        font-size: 1.1em;
+        font-weight: 300;
+        opacity: 0.95;
+      }
+      nav {
+        background: #8b9d6a;
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        flex-wrap: wrap;
+      }
+      nav a {
+        color: white;
+        text-decoration: none;
+        margin: 5px 20px;
+        font-weight: 500;
+        padding: 8px 16px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+      }
+      nav a:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+      }
+      nav a.active {
+        background: rgba(255, 255, 255, 0.3);
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+      main {
+        max-width: 1300px;
+        margin: 30px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(107, 124, 79, 0.15);
+      }
+      h2 {
+        color: #6b7c4f;
+        border-bottom: 3px solid #c4d4a8;
+        padding-bottom: 10px;
+        margin: 30px 0 20px 0;
+        font-weight: 600;
+        font-size: 1.8em;
+      }
+      h4 {
+        color: #6b7c4f;
+        margin: 15px 0;
+        font-weight: 600;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 20px 0;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      }
+      th,
+      td {
+        border: 1px solid #d4e0c4;
+        padding: 15px;
+        text-align: center;
+      }
+      th {
+        background: linear-gradient(135deg, #8b9d6a 0%, #a0b380 100%);
+        color: white;
+        font-weight: 600;
+      }
+      tr:nth-child(even) {
+        background: #f9faf7;
+      }
+      tr:hover {
+        background: #f0f4e8;
+      }
+      .metric-box {
+        background: linear-gradient(135deg, #f9faf7 0%, #f0f4e8 100%);
+        padding: 25px;
+        margin: 20px 0;
+        border-radius: 15px;
+        border-left: 5px solid #8b9d6a;
+        box-shadow: 0 4px 15px rgba(107, 124, 79, 0.1);
+      }
+      .btn {
+        padding: 12px 24px;
+        background: linear-gradient(135deg, #8b9d6a 0%, #a0b380 100%);
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(139, 157, 106, 0.3);
+        margin: 5px;
+        text-decoration: none;
+        display: inline-block;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(139, 157, 106, 0.4);
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, #6b7c4f 0%, #8b9d6a 100%);
+      }
+      .comparison-card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        border: 2px solid #d4e0c4;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+      .comparison-card h5 {
+        margin-top: 0;
+        font-size: 1.2em;
+      }
+      .comparison-card p {
+        margin: 8px 0;
+        line-height: 1.6;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>🧬 Algorithm Comparison</h1>
+      <div class="subtitle">Performance Analysis & Metrics</div>
+      <div style="margin-top: 10px; font-size: 13px; opacity: 0.9">
+        <span
+          style="
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 15px;
+          "
+          >📊 Comparison</span
+        >
+      </div>
+    </header>
+    <nav>
+      <a href="{{ url_for('index') }}">Home</a>
+      <a href="{{ url_for('compare_algorithms_route') }}" class="active"
+        >Algorithm Comparison</a
+      >
+      <a href="{{ url_for('genetic_visualization') }}"
+        >Genetic Algorithm Demo</a
+      >
+    </nav>
 
-<main>
-    <h2>Algorithm Comparison Results</h2>
-    
-    <div class="metric-box">
+    <main>
+      <h2>Algorithm Comparison Results</h2>
+
+      <div class="metric-box">
         <h4>Performance Metrics</h4>
         <table>
-            <tr style="background: #f8f9fa;">
-                <th>Algorithm</th>
-                <th>Execution Time (s)</th>
-                <th>Space Complexity</th>
-                <th>Calorie Accuracy (%)</th>
-                <th>Macro Accuracy (%)</th>
-                <th>Overall Accuracy (%)</th>
-            </tr>
-            {% for algo_name, metrics in [('Brute Force', comparison_metrics.brute_force), ('Genetic Algorithm', comparison_metrics.genetic)] %}
-            <tr {% if algo_name == 'Genetic Algorithm' %}style="background: #d4edda;"{% endif %}>
-                <td><strong>{{ algo_name }}</strong></td>
-                <td>{{ "%.3f"|format(metrics.execution_time) }}</td>
-                <td>
-                    {% if algo_name == 'Brute Force' %}
-                        O(n³) - High
-                    {% else %}
-                        O(g×p) - Low
-                    {% endif %}
-                </td>
-                <td>{{ "%.1f"|format((1 - metrics.accuracy_metrics.calorie_deviation_pct) * 100) if metrics.accuracy_metrics else 'N/A' }}</td>
-                <td>{{ "%.1f"|format(metrics.accuracy_metrics.macro_accuracy * 100) if metrics.accuracy_metrics else 'N/A' }}</td>
-                <td>{{ "%.1f"|format(metrics.accuracy_metrics.overall_accuracy * 100) if metrics.accuracy_metrics else 'N/A' }}</td>
-            </tr>
-            {% endfor %}
+          <tr style="background: #f8f9fa">
+            <th>Algorithm</th>
+            <th>Execution Time (s)</th>
+            <th>Space Complexity</th>
+            <th>Calorie Accuracy (%)</th>
+            <th>Macro Accuracy (%)</th>
+            <th>Overall Accuracy (%)</th>
+          </tr>
+
+          <!-- Brute Force Row -->
+          <tr>
+            <td><strong>Brute Force</strong></td>
+            <td>
+              {% set bf_time = comparison_metrics.brute_force.execution_time if
+              comparison_metrics and comparison_metrics.brute_force and
+              comparison_metrics.brute_force.execution_time else none %} {{
+              bf_time if bf_time else 'N/A' }}
+            </td>
+            <td>O(n³) - High</td>
+            <td>
+              {% set bf_cal =
+              comparison_metrics.brute_force.accuracy_metrics.calorie_deviation_pct
+              if comparison_metrics and comparison_metrics.brute_force and
+              comparison_metrics.brute_force.accuracy_metrics and
+              comparison_metrics.brute_force.accuracy_metrics.calorie_deviation_pct
+              else none %} {% if bf_cal %} {{ ((1 - bf_cal) * 100)|int }} {%
+              else %} N/A {% endif %}
+            </td>
+            <td>
+              {% set bf_macro =
+              comparison_metrics.brute_force.accuracy_metrics.macro_accuracy if
+              comparison_metrics and comparison_metrics.brute_force and
+              comparison_metrics.brute_force.accuracy_metrics and
+              comparison_metrics.brute_force.accuracy_metrics.macro_accuracy
+              else none %} {% if bf_macro %} {{ (bf_macro * 100)|int }} {% else
+              %} N/A {% endif %}
+            </td>
+            <td>
+              {% set bf_overall =
+              comparison_metrics.brute_force.accuracy_metrics.overall_accuracy
+              if comparison_metrics and comparison_metrics.brute_force and
+              comparison_metrics.brute_force.accuracy_metrics and
+              comparison_metrics.brute_force.accuracy_metrics.overall_accuracy
+              else none %} {% if bf_overall %} {{ (bf_overall * 100)|int }} {%
+              else %} N/A {% endif %}
+            </td>
+          </tr>
+
+          <!-- Genetic Algorithm Row -->
+          <tr style="background: #d4edda">
+            <td><strong>Genetic Algorithm</strong></td>
+            <td>
+              {% set ga_time = comparison_metrics.genetic.execution_time if
+              comparison_metrics and comparison_metrics.genetic and
+              comparison_metrics.genetic.execution_time else none %} {{ ga_time
+              if ga_time else 'N/A' }}
+            </td>
+            <td>O(g×p) - Low</td>
+            <td>
+              {% set ga_cal =
+              comparison_metrics.genetic.accuracy_metrics.calorie_deviation_pct
+              if comparison_metrics and comparison_metrics.genetic and
+              comparison_metrics.genetic.accuracy_metrics and
+              comparison_metrics.genetic.accuracy_metrics.calorie_deviation_pct
+              else none %} {% if ga_cal %} {{ ((1 - ga_cal) * 100)|int }} {%
+              else %} N/A {% endif %}
+            </td>
+            <td>
+              {% set ga_macro =
+              comparison_metrics.genetic.accuracy_metrics.macro_accuracy if
+              comparison_metrics and comparison_metrics.genetic and
+              comparison_metrics.genetic.accuracy_metrics and
+              comparison_metrics.genetic.accuracy_metrics.macro_accuracy else
+              none %} {% if ga_macro %} {{ (ga_macro * 100)|int }} {% else %}
+              N/A {% endif %}
+            </td>
+            <td>
+              {% set ga_overall =
+              comparison_metrics.genetic.accuracy_metrics.overall_accuracy if
+              comparison_metrics and comparison_metrics.genetic and
+              comparison_metrics.genetic.accuracy_metrics and
+              comparison_metrics.genetic.accuracy_metrics.overall_accuracy else
+              none %} {% if ga_overall %} {{ (ga_overall * 100)|int }} {% else
+              %} N/A {% endif %}
+            </td>
+          </tr>
+
+          <!-- Seeded Genetic Algorithm Row -->
+          <tr style="background: #e2f0ff">
+            <td><strong>Genetic (Seeded)</strong></td>
+            <td>
+              {% set gs_time = comparison_metrics.genetic_seeded.execution_time
+              if comparison_metrics and comparison_metrics.genetic_seeded is
+              defined else none %} {{ gs_time if gs_time is not none else 'N/A'
+              }}
+            </td>
+            <td>O(g×p) - Low (seeded by sampled scoring)</td>
+            <td>
+              {% set gs_cal =
+              comparison_metrics.genetic_seeded.accuracy_metrics.calorie_deviation_pct
+              if comparison_metrics and comparison_metrics.genetic_seeded and
+              comparison_metrics.genetic_seeded.accuracy_metrics is defined else
+              none %} {{ (((1 - gs_cal) * 100)|int) if gs_cal is not none else
+              'N/A' }}
+            </td>
+            <td>
+              {% set gs_macro =
+              comparison_metrics.genetic_seeded.accuracy_metrics.macro_accuracy
+              if comparison_metrics and comparison_metrics.genetic_seeded and
+              comparison_metrics.genetic_seeded.accuracy_metrics is defined else
+              none %} {{ ((gs_macro * 100)|int) if gs_macro is not none else
+              'N/A' }}
+            </td>
+            <td>
+              {% set gs_overall =
+              comparison_metrics.genetic_seeded.accuracy_metrics.overall_accuracy
+              if comparison_metrics and comparison_metrics.genetic_seeded and
+              comparison_metrics.genetic_seeded.accuracy_metrics is defined else
+              none %} {{ ((gs_overall * 100)|int) if gs_overall is not none else
+              'N/A' }}
+            </td>
+          </tr>
         </table>
-        
-        <div style="margin-top: 15px; font-size: 12px; color: #666;">
-            <p><strong>Space Complexity:</strong></p>
-            <p>• Brute Force: O(n³) - Evaluates all possible combinations, high memory usage</p>
-            <p>• Genetic Algorithm: O(g×p) - Uses population-based evolution, efficient memory usage</p>
-            <p>Where n = number of meal options, g = generations, p = population size</p>
-        </div>
-    </div>
 
-    <h2>Algorithm Analysis Summary</h2>
-    <div class="metric-box">
+        <div style="margin-top: 15px; font-size: 12px; color: #666">
+          <p><strong>Space Complexity:</strong></p>
+          <p>
+            • Brute Force: O(n³) - Evaluates all possible combinations, high
+            memory usage
+          </p>
+          <p>
+            • Genetic Algorithm: O(g×p) - Uses population-based evolution,
+            efficient memory usage
+          </p>
+          <p>
+            Where n = number of meal options, g = generations, p = population
+            size
+          </p>
+        </div>
+      </div>
+
+      <h2>Algorithm Analysis Summary</h2>
+      <div class="metric-box">
         <h4>Key Findings</h4>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 15px 0;">
-            <div style="background: #fff3cd; padding: 15px; border-radius: 4px; border-left: 4px solid #ffc107;">
-                <h5 style="color: #856404; margin-top: 0;">⚡ Brute Force Algorithm</h5>
-                <p><strong>Time:</strong> {{ "%.3f"|format(comparison_metrics.brute_force.execution_time) }}s</p>
-                <p><strong>Space:</strong> O(n³) - High memory usage</p>
-                <p><strong>Calorie Accuracy:</strong> {{ "%.1f"|format((1 - comparison_metrics.brute_force.accuracy_metrics.calorie_deviation_pct) * 100) if comparison_metrics.brute_force.accuracy_metrics else 'N/A' }}%</p>
-                <p><strong>Macro Accuracy:</strong> {{ "%.1f"|format(comparison_metrics.brute_force.accuracy_metrics.macro_accuracy * 100) if comparison_metrics.brute_force.accuracy_metrics else 'N/A' }}%</p>
-            </div>
-            <div style="background: #d4edda; padding: 15px; border-radius: 4px; border-left: 4px solid #28a745;">
-                <h5 style="color: #155724; margin-top: 0;">🧬 Genetic Algorithm</h5>
-                <p><strong>Time:</strong> {{ "%.3f"|format(comparison_metrics.genetic.execution_time) }}s</p>
-                <p><strong>Space:</strong> O(g×p) - Low memory usage</p>
-                <p><strong>Calorie Accuracy:</strong> {{ "%.1f"|format((1 - comparison_metrics.genetic.accuracy_metrics.calorie_deviation_pct) * 100) if comparison_metrics.genetic.accuracy_metrics else 'N/A' }}%</p>
-                <p><strong>Macro Accuracy:</strong> {{ "%.1f"|format(comparison_metrics.genetic.accuracy_metrics.macro_accuracy * 100) if comparison_metrics.genetic.accuracy_metrics else 'N/A' }}%</p>
-            </div>
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 15px 0;
+          "
+        >
+          <div
+            style="
+              background: #fff3cd;
+              padding: 15px;
+              border-radius: 4px;
+              border-left: 4px solid #ffc107;
+            "
+          >
+            <h5 style="color: #856404; margin-top: 0">
+              ⚡ Brute Force Algorithm
+            </h5>
+            <p>
+              <strong>Time:</strong>
+              {% set bf_time_summary =
+              comparison_metrics.brute_force.execution_time if
+              comparison_metrics and comparison_metrics.brute_force and
+              comparison_metrics.brute_force.execution_time else none %} {% if
+              bf_time_summary %} {{ bf_time_summary }}s {% else %} N/A {% endif
+              %}
+            </p>
+            <p><strong>Space:</strong> O(n³) - High memory usage</p>
+            <p>
+              <strong>Calorie Accuracy:</strong>
+              {% if bf_cal %} {{ ((1 - bf_cal) * 100)|int }}% {% else %} N/A {%
+              endif %}
+            </p>
+            <p>
+              <strong>Macro Accuracy:</strong>
+              {% if bf_macro %} {{ (bf_macro * 100)|int }}% {% else %} N/A {%
+              endif %}
+            </p>
+          </div>
+          <div
+            style="
+              background: #d4edda;
+              padding: 15px;
+              border-radius: 4px;
+              border-left: 4px solid #28a745;
+            "
+          >
+            <h5 style="color: #155724; margin-top: 0">🧬 Genetic Algorithm</h5>
+            <p>
+              <strong>Time:</strong>
+              {% set ga_time_summary = comparison_metrics.genetic.execution_time
+              if comparison_metrics and comparison_metrics.genetic and
+              comparison_metrics.genetic.execution_time else none %} {% if
+              ga_time_summary %} {{ ga_time_summary }}s {% else %} N/A {% endif
+              %}
+            </p>
+            <p><strong>Space:</strong> O(g×p) - Low memory usage</p>
+            <p>
+              <strong>Calorie Accuracy:</strong>
+              {% if ga_cal %} {{ ((1 - ga_cal) * 100)|int }}% {% else %} N/A {%
+              endif %}
+            </p>
+            <p>
+              <strong>Macro Accuracy:</strong>
+              {% if ga_macro %} {{ (ga_macro * 100)|int }}% {% else %} N/A {%
+              endif %}
+            </p>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <div style="text-align: center; margin: 30px 0;">
-        <a href="{{ url_for('index') }}" class="btn btn-primary">Back to Home</a>
-        <a href="{{ url_for('compare_algorithms_route') }}" class="btn">Run New Comparison</a>
-    </div>
-</main>
-</body>
+      <div style="text-align: center; margin: 30px 0">
+        <a href="{{ url_for('index') }}" class="btn btn-primary"
+          >Back to Home</a
+        >
+        <a href="{{ url_for('compare_algorithms_route') }}" class="btn"
+          >Run New Comparison</a
+        >
+      </div>
+    </main>
+  </body>
 </html>

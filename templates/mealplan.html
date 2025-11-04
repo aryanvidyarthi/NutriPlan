@@ -2,53 +2,281 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>INDIAN MEAL RECOMMENDATION</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NutriPlan - Indian Meal Recommendation</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-    body { font-family: Arial, sans-serif; margin: 0; background: #f8f9fa; color: #333; }
-    header { background: #007BFF; color: white; padding: 15px; text-align: center; }
-    nav { background: #0056b3; padding: 10px; display: flex; justify-content: center; }
-    nav a { color: white; text-decoration: none; margin: 0 15px; font-weight: bold; }
-    nav a:hover { text-decoration: underline; }
-    main { max-width: 1100px; margin: 20px auto; background: white; padding: 20px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-    h2 { color: #007BFF; border-bottom: 2px solid #eee; padding-bottom: 4px; }
-    label { font-weight: bold; display: block; margin-top: 10px; }
-    select, input[type=number], input[type=range], input[type=text], input[type=date] { width: 100%; padding: 6px; margin-top: 4px; }
-    input[type=range] { width: 80%; }
-    .slider-value { font-weight: bold; margin-left: 8px; }
-    .plan-box { margin-top: 20px; background: #fdfdfd; padding: 15px; border: 1px solid #ddd; border-radius: 4px; }
-    table { border-collapse: collapse; width: 100%; margin-top: 8px; }
-    th, td { border: 1px solid #ddd; padding: 6px; text-align: center; }
-    th { background: #f1f1f1; }
-    .btn { padding: 8px 14px; background: #28a745; color: white; border: none; cursor: pointer; border-radius: 4px; }
-    .btn:hover { background: #218838; }
-    .btn-danger { background: #dc3545; }
-    .btn-danger:hover { background: #b02a37; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+        font-family: 'Poppins', sans-serif; 
+        background: linear-gradient(135deg, #f5f7f0 0%, #e8ede0 100%);
+        color: #3d4a2c;
+        min-height: 100vh;
+    }
+    header { 
+        background: linear-gradient(135deg, #6b7c4f 0%, #8b9d6a 100%);
+        color: white; 
+        padding: 30px 20px;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(107, 124, 79, 0.3);
+    }
+    header h1 {
+        font-size: 2.5em;
+        font-weight: 700;
+        margin-bottom: 8px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+    header .subtitle {
+        font-size: 1.1em;
+        font-weight: 300;
+        opacity: 0.95;
+    }
+    nav { 
+        background: #8b9d6a;
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        flex-wrap: wrap;
+    }
+    nav a { 
+        color: white;
+        text-decoration: none;
+        margin: 5px 20px;
+        font-weight: 500;
+        padding: 8px 16px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+    }
+    nav a:hover { 
+        background: rgba(255,255,255,0.2);
+        transform: translateY(-2px);
+    }
+    nav a.active {
+        background: rgba(255,255,255,0.3);
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    main { 
+        max-width: 1200px;
+        margin: 30px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(107, 124, 79, 0.15);
+    }
+    h2 { 
+        color: #6b7c4f;
+        border-bottom: 3px solid #c4d4a8;
+        padding-bottom: 10px;
+        margin: 30px 0 20px 0;
+        font-weight: 600;
+        font-size: 1.5em;
+    }
+    label { 
+        font-weight: 500;
+        display: block;
+        margin-top: 15px;
+        color: #5a6b47;
+    }
+    select, input[type=number], input[type=range], input[type=text], input[type=date] { 
+        width: 100%;
+        padding: 12px;
+        margin-top: 6px;
+        border: 2px solid #d4e0c4;
+        border-radius: 10px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+    select:focus, input:focus {
+        outline: none;
+        border-color: #8b9d6a;
+        box-shadow: 0 0 0 3px rgba(139, 157, 106, 0.1);
+    }
+    input[type=range] { 
+        width: 85%;
+        height: 8px;
+        background: linear-gradient(to right, #c4d4a8, #8b9d6a);
+        border-radius: 5px;
+        outline: none;
+    }
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        background: #6b7c4f;
+        cursor: pointer;
+        border-radius: 50%;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .slider-value { 
+        font-weight: 600;
+        margin-left: 12px;
+        color: #6b7c4f;
+    }
+    .plan-box { 
+        margin-top: 25px;
+        background: linear-gradient(135deg, #f9faf7 0%, #f0f4e8 100%);
+        padding: 25px;
+        border: 2px solid #d4e0c4;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(107, 124, 79, 0.1);
+    }
+    .plan-box h3 {
+        color: #6b7c4f;
+        margin-bottom: 15px;
+        font-size: 1.3em;
+    }
+    table { 
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 15px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    th, td { 
+        border: 1px solid #d4e0c4;
+        padding: 12px;
+        text-align: center;
+    }
+    th { 
+        background: linear-gradient(135deg, #8b9d6a 0%, #a0b380 100%);
+        color: white;
+        font-weight: 600;
+    }
+    tr:nth-child(even) {
+        background: #f9faf7;
+    }
+    tr:hover {
+        background: #f0f4e8;
+    }
+    .btn { 
+        padding: 12px 24px;
+        background: linear-gradient(135deg, #8b9d6a 0%, #a0b380 100%);
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(139, 157, 106, 0.3);
+        margin: 5px;
+    }
+    .btn:hover { 
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(139, 157, 106, 0.4);
+    }
+    .btn-danger { 
+        background: linear-gradient(135deg, #c17a6f 0%, #d4958f 100%);
+    }
+    .btn-danger:hover { 
+        box-shadow: 0 6px 20px rgba(193, 122, 111, 0.4);
+    }
+    .error-message {
+        background: #fef3e8;
+        color: #8b6f47;
+        border: 2px solid #e8d4b8;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+    .health-badge {
+        display: inline-block;
+        background: #fff8e8;
+        color: #8b7c4f;
+        padding: 8px 16px;
+        border-radius: 20px;
+        margin: 5px;
+        font-size: 0.9em;
+        border: 1px solid #e8d4a8;
+    }
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+    ul li {
+        padding: 12px 15px;
+        border-bottom: 1px solid #e8ede0;
+        background: white;
+        margin: 5px 0;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+    }
+    ul li:hover {
+        background: #f9faf7;
+        transform: translateX(5px);
+    }
+    ul li:last-child {
+        border-bottom: none;
+    }
+    ul li b {
+        color: #6b7c4f;
+        font-weight: 600;
+    }
+    .form-section {
+        background: linear-gradient(135deg, #fafbf8 0%, #f5f7f0 100%);
+        padding: 25px;
+        border-radius: 15px;
+        margin: 20px 0;
+        border: 1px solid #e8ede0;
+    }
+    .button-group {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+        margin: 20px 0;
+        padding: 20px;
+        background: linear-gradient(135deg, #fafbf8 0%, #f5f7f0 100%);
+        border-radius: 15px;
+    }
+    small {
+        color: #7a8a6a;
+        font-size: 0.85em;
+        display: block;
+        margin-top: 5px;
+    }
+    .meal-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.05em;
+    }
+    .meal-emoji {
+        font-size: 1.5em;
+    }
 </style>
 </head>
 <body>
 <header>
-    <h1>INDIAN MEAL RECOMMENDATION</h1>
+    <h1>🌿 NutriPlan</h1>
+    <div class="subtitle">Personalized Indian Meal Recommendations</div>
+    <div style="margin-top:10px;font-size:13px;opacity:0.9;">
+        <span style="background:rgba(255,255,255,0.2);padding:5px 15px;border-radius:15px;">📍 Home</span>
+    </div>
 </header>
 <nav>
-    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('index') }}" class="active">Home</a>
     <a href="{{ url_for('compare_algorithms_route') }}">Algorithm Comparison</a>
     <a href="{{ url_for('genetic_visualization') }}">Genetic Algorithm Demo</a>
 </nav>
 
 <main>
 {% if error_message %}
-<div style="background:#fff3cd;color:#856404;border:1px solid #ffeeba;padding:10px;border-radius:4px;margin-bottom:12px;">
-  {{ error_message }}
-  {% if targets %}
-  {% else %}
-  {% endif %}
-  </div>
+<div class="error-message">
+  ⚠️ {{ error_message }}
+</div>
 {% endif %}
 <form method="POST">
     <input type="hidden" id="form_action" name="action" value="">
+    <input type="hidden" id="scrollY" name="scrollY" value="0">
 
     <!-- PERSONAL INFO -->
-    <h2>Personal Info</h2>
+    <h2>👤 Personal Information</h2>
     <label>Age</label>
     <input type="number" name="age" value="{{ user_inputs.age if user_inputs }}">
     <label>Gender</label>
@@ -91,12 +319,30 @@
     <label>Preference</label>
     <select name="preference">
         <option value="veg" {% if user_inputs and user_inputs.preference=='veg' %}selected{% endif %}>Veg</option>
-        <option value="both" {% if user_inputs and user_inputs.preference=='both' %}selected{% endif %}>Veg & Non-Veg</option>
+        <option value="both" {% if user_inputs and user_inputs.preference=='both' %}selected{% endif %}>Veg/Non-Veg</option>
+        <option value="nonveg" {% if user_inputs and user_inputs.preference=='nonveg' %}selected{% endif %}>Non-Veg</option>
     </select>
+
+    <!-- HEALTH CONDITIONS -->
+    <h2>🏥 Health Conditions</h2>
+    <div style="margin: 10px 0;">
+        <label style="display: flex; align-items: center; font-weight: normal;">
+            <input type="checkbox" name="diabetes" value="yes" style="margin-right: 8px; width: auto;" 
+                   {% if user_inputs and user_inputs.diabetes %}checked{% endif %}>
+            Diabetes (ICMR Guidelines)
+        </label>
+    </div>
+    <div style="margin: 10px 0;">
+        <label style="display: flex; align-items: center; font-weight: normal;">
+            <input type="checkbox" name="hypertension" value="yes" style="margin-right: 8px; width: auto;" 
+                   {% if user_inputs and user_inputs.hypertension %}checked{% endif %}>
+            Hypertension (ICMR Guidelines)
+        </label>
+    </div>
 
 
     <!-- MEAL SPLIT -->
-    <h2>Meal Calorie Split %</h2>
+    <h2>🍽️ Meal Calorie Distribution</h2>
     <label>Breakfast: <span id="val-breakfast">{{ breakfast_pct if breakfast_pct else 25 }}</span>%</label>
     <input type="range" min="20" max="60" name="breakfast_pct" id="breakfast_pct" value="{{ breakfast_pct if breakfast_pct else 25 }}">
     <label>Lunch: <span id="val-lunch">{{ lunch_pct if lunch_pct else 40 }}</span>%</label>
@@ -105,12 +351,27 @@
     <input type="range" min="20" max="60" name="dinner_pct" id="dinner_pct" value="{{ dinner_pct if dinner_pct else 35 }}">
 
     <!-- MACRO FOCUS -->
-    <h2>Macro Focus</h2>
+    <h2>💪 Macro Focus</h2>
     <select name="macro_focus">
         <option value="protein" {% if macro_focus=="protein" %}selected{% endif %}>Protein-rich</option>
         <option value="carbs" {% if macro_focus=="carbs" %}selected{% endif %}>Carbs-rich</option>
         <option value="fat" {% if macro_focus=="fat" %}selected{% endif %}>Fat-rich</option>
     </select>
+
+    <!-- Optional penalties (weights) -->
+    <h2>🌱 Sustainability Preferences</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end;">
+      <div>
+        <label>Cost weight (-1.0 to 0.0)</label>
+        <input type="number" name="cost_weight" step="0.1" min="-1" max="0" value="{{ cost_weight if cost_weight is not none else 0 }}">
+        <small>More negative = penalize expensive plans more. 0 = ignore.</small>
+      </div>
+      <div>
+        <label>Carbon weight (-1.0 to 0.0)</label>
+        <input type="number" name="carbon_weight" step="0.1" min="-1" max="0" value="{{ carbon_weight if carbon_weight is not none else 0 }}">
+        <small>More negative = penalize higher footprint more. 0 = ignore.</small>
+      </div>
+    </div>
 
 
 
@@ -119,13 +380,26 @@
 	{% if targets %}
 	<!-- TARGETS DISPLAY -->
 	<div class="plan-box">
-		<h3>Your Daily Nutritional Targets</h3>
+		<h3>🎯 Your Daily Nutritional Targets</h3>
 		{% if targets.Calculated_TDEE and targets.Calculated_TDEE != targets.TDEE %}
-		<p style="color: #666; font-size: 12px; margin-bottom: 10px;">
-			<strong>Note:</strong> Using your custom calorie target of {{ targets.TDEE }} kcal 
+		<p style="color: #7a8a6a; font-size: 13px; margin-bottom: 15px; padding: 10px; background: #f9faf7; border-radius: 8px;">
+			<strong>📝 Note:</strong> Using your custom calorie target of {{ targets.TDEE }} kcal 
 			(instead of calculated {{ targets.Calculated_TDEE }} kcal)
 		</p>
 		{% endif %}
+		
+		{% if targets.Diabetes or targets.Hypertension %}
+		<div style="background: #fff8e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #c4a86f;">
+			<strong style="color: #8b7c4f;">🏥 Health Condition Guidelines Applied:</strong><br>
+			{% if targets.Diabetes %}
+				<span class="health-badge">🍯 Diabetes (ICMR Guidelines)</span>
+			{% endif %}
+			{% if targets.Hypertension %}
+				<span class="health-badge">❤️ Hypertension (ICMR Guidelines)</span>
+			{% endif %}
+		</div>
+		{% endif %}
+		
 		<table>
 			<thead><tr><th>TDEE (kcal)</th><th>Protein (g)</th><th>Carbs (g)</th><th>Fat (g)</th></tr></thead>
 			<tbody>
@@ -143,13 +417,14 @@
     {% if plan %}
     <!-- PLAN DISPLAY -->
     <div class="plan-box">
-        <div style="text-align:right;font-weight:bold;">
-            Plan {{ plan_index + 1 }} of {{ total_plans }}
+        <div style="text-align:right;font-weight:600;color:#8b9d6a;font-size:1.1em;margin-bottom:15px;">
+            📋 Plan {{ plan_index + 1 }} of {{ total_plans }}
         </div>
+        <h3 style="margin-bottom:20px;">🍴 Your Meal Plan</h3>
         <ul>
-            <li><b>Breakfast:</b> {{ plan.meals.breakfast.label if plan and plan.meals and plan.meals.breakfast else 'N/A' }}</li>
-            <li><b>Lunch:</b> {{ plan.meals.lunch.label if plan and plan.meals and plan.meals.lunch else 'N/A' }}</li>
-            <li><b>Dinner:</b> {{ plan.meals.dinner.label if plan and plan.meals and plan.meals.dinner else 'N/A' }}</li>
+            <li class="meal-item"><span class="meal-emoji">🍳</span><div><b>Breakfast:</b> {{ plan.meals.breakfast.label if plan and plan.meals and plan.meals.breakfast else 'N/A' }}</div></li>
+            <li class="meal-item"><span class="meal-emoji">🍽️</span><div><b>Lunch:</b> {{ plan.meals.lunch.label if plan and plan.meals and plan.meals.lunch else 'N/A' }}</div></li>
+            <li class="meal-item"><span class="meal-emoji">🍖</span><div><b>Dinner:</b> {{ plan.meals.dinner.label if plan and plan.meals and plan.meals.dinner else 'N/A' }}</div></li>
         </ul>
         
 
@@ -234,20 +509,58 @@
     <input type="hidden" name="plan_index" value="{{ plan_index }}">
     <input type="hidden" name="macro_focus" value="{{ macro_focus }}">
 
-    <br><br>
-    <div style="margin-bottom:8px;font-weight:bold;">
-        Total plans available: {{ total_plans }}
+    <div class="button-group">
+    <button class="btn" type="submit" onclick="setAction('generate')">✨ Generate Meal Plan</button>
+      <div style="margin-left:auto"></div>
+      <!-- Fix a meal controls -->
+      <label style="margin:0 10px 0 0;color:#6b7c4f;font-weight:500;">🔒 Lock a meal:</label>
+      <select name="fixed_meal_type" id="fixed_meal_type" style="width:auto;min-width:150px;">
+        <option value="">None</option>
+        <option value="breakfast" {% if fixed_meal_type=='breakfast' %}selected{% endif %}>🍳 Breakfast</option>
+        <option value="lunch" {% if fixed_meal_type=='lunch' %}selected{% endif %}>🍽️ Lunch</option>
+        <option value="dinner" {% if fixed_meal_type=='dinner' %}selected{% endif %}>🍖 Dinner</option>
+      </select>
+      <button class="btn" type="submit" onclick="setAction('load_fixed_options')">📋 Load Options</button>
     </div>
     
-    <button class="btn" type="submit" onclick="setAction('generate')">Generate</button>
-    
     {% if total_plans > 1 %}
-        <button class="btn" type="submit" onclick="setAction('previous')">Previous Plan</button>
-        <button class="btn" type="submit" onclick="setAction('next')">Next Plan</button>
-        <button class="btn" type="submit" onclick="setAction('show_all')">Show All Plans</button>
+    <div class="button-group">
+        <div style="font-weight:600;color:#6b7c4f;margin-right:10px;">📊 Total plans: {{ total_plans }}</div>
+        <button class="btn" type="submit" onclick="setAction('previous')">⬅️ Previous</button>
+        <button class="btn" type="submit" onclick="setAction('next')">➡️ Next</button>
+        <button class="btn" type="submit" onclick="setAction('show_all')">📑 Show All</button>
+        <button class="btn btn-danger" type="submit" onclick="setAction('restart')">🔄 Restart</button>
+    </div>
+    {% else %}
+    <div class="button-group">
+        <button class="btn btn-danger" type="submit" onclick="setAction('restart')">🔄 Restart</button>
+    </div>
     {% endif %}
-    
-    <button class="btn btn-danger" type="submit" onclick="setAction('restart')">Restart</button>
+    <!-- Fixed meal chooser panel -->
+    {% if fixed_meal_type and fixed_options %}
+    <div class="plan-box">
+        <h3>Fix {{ fixed_meal_type|capitalize }}: choose item and portion</h3>
+        <label>Meal option</label>
+        <select name="fixed_norm_id" id="fixed_norm_id">
+            {% for opt in fixed_options %}
+            <option value="{{ opt.norm_id }}" {% if request.form.get('fixed_norm_id')==opt.norm_id %}selected{% endif %}>{{ opt.label }}</option>
+            {% endfor %}
+        </select>
+        <label style="margin-top:10px;">Portion multiplier</label>
+        <select name="fixed_multiplier" id="fixed_multiplier">
+            <option value="0.5" {% if fixed_multiplier=='0.5' %}selected{% endif %}>Small (0.5x)</option>
+            <option value="1.0" {% if fixed_multiplier in ['1.0', None, ''] %}selected{% endif %}>Regular (1.0x)</option>
+            <option value="1.5" {% if fixed_multiplier=='1.5' %}selected{% endif %}>Large (1.5x)</option>
+            <option value="2.0" {% if fixed_multiplier=='2.0' %}selected{% endif %}>2.0x</option>
+            <option value="2.5" {% if fixed_multiplier=='2.5' %}selected{% endif %}>2.5x</option>
+            <option value="3.0" {% if fixed_multiplier=='3.0' %}selected{% endif %}>3.0x</option>
+        </select>
+        <div style="margin-top:12px;">
+            <button class="btn" type="submit" onclick="setAction('generate')">Apply Fixed {{ fixed_meal_type|capitalize }}</button>
+        </div>
+    </div>
+    {% endif %}
+
 </form>
 
         
@@ -256,6 +569,10 @@
 <script>
 function setAction(act) {
     document.getElementById('form_action').value = act;
+    // store current scroll before submit
+    const y = window.scrollY || document.documentElement.scrollTop || 0;
+    const hidden = document.getElementById('scrollY');
+    if (hidden) hidden.value = y;
     if (act === 'next' || act === 'restart') {
         ["age","gender","height","weight","activity","region","preference"].forEach(name => {
             const el = document.getElementsByName(name)[0];
@@ -274,6 +591,12 @@ function togglePregnancyFields() {
 
 // Add event listener when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // restore scroll after navigation
+    const yStr = document.getElementsByName('scrollY')[0]?.value;
+    const y = parseInt(yStr || '0', 10);
+    if (!isNaN(y) && y > 0) {
+        window.scrollTo({ top: y, behavior: 'instant' });
+    }
     const genderElement = document.getElementById("gender");
     if (genderElement) {
         genderElement.addEventListener("change", togglePregnancyFields);

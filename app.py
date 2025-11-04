@@ -58,10 +58,68 @@ def get_targets(user_inputs):
 		calories = calculated_calories
 	
 	extra_prot = get_extra_protein(user_inputs["gender"], user_inputs.get("pregnancy"), user_inputs.get("lactating"))
-	protein_icmr = 0.83 * user_inputs["weight"] + extra_prot
-	carbs = (0.60 * calories) / 4
-	fats = (0.25 * calories) / 9
-	protein = max((0.15 * calories) / 4, protein_icmr)
+	
+	# Check for health conditions and apply ICMR formulas
+	diabetes = user_inputs.get("diabetes", False)
+	hypertension = user_inputs.get("hypertension", False)
+	
+	if diabetes and hypertension:
+		# Both conditions - use diabetes guidelines (more restrictive)
+		# Diabetes ICMR Guidelines
+		carb_calories_min = 0.55 * calories
+		carb_calories_max = 0.60 * calories
+		carb_calories = (carb_calories_min + carb_calories_max) / 2  # Use average
+		carbs = max(carb_calories / 4, 130)  # Minimum 130g/day
+		
+		protein_calories_min = 0.10 * calories
+		protein_calories_max = 0.15 * calories
+		protein_calories = (protein_calories_min + protein_calories_max) / 2
+		protein = max(protein_calories / 4, 0.83 * user_inputs["weight"] + extra_prot)
+		
+		fat_calories_min = 0.20 * calories
+		fat_calories_max = 0.25 * calories
+		fat_calories = (fat_calories_min + fat_calories_max) / 2
+		fats = fat_calories / 9
+		
+	elif diabetes:
+		# Diabetes ICMR Guidelines
+		carb_calories_min = 0.55 * calories
+		carb_calories_max = 0.60 * calories
+		carb_calories = (carb_calories_min + carb_calories_max) / 2  # Use average
+		carbs = max(carb_calories / 4, 130)  # Minimum 130g/day
+		
+		protein_calories_min = 0.10 * calories
+		protein_calories_max = 0.15 * calories
+		protein_calories = (protein_calories_min + protein_calories_max) / 2
+		protein = max(protein_calories / 4, 0.83 * user_inputs["weight"] + extra_prot)
+		
+		fat_calories_min = 0.20 * calories
+		fat_calories_max = 0.25 * calories
+		fat_calories = (fat_calories_min + fat_calories_max) / 2
+		fats = fat_calories / 9
+		
+	elif hypertension:
+		# Hypertension ICMR Guidelines
+		carb_calories_min = 0.50 * calories
+		carb_calories_max = 0.60 * calories
+		carb_calories = (carb_calories_min + carb_calories_max) / 2
+		carbs = carb_calories / 4
+		
+		protein_calories_min = 0.10 * calories
+		protein_calories_max = 0.15 * calories
+		protein_calories = (protein_calories_min + protein_calories_max) / 2
+		protein = max(protein_calories / 4, 0.83 * user_inputs["weight"] + extra_prot)
+		
+		fat_calories = 0.30 * calories  # Maximum 30% for hypertension
+		fats = fat_calories / 9
+		
+	else:
+		# Standard ICMR guidelines (original logic)
+		protein_icmr = 0.83 * user_inputs["weight"] + extra_prot
+		carbs = (0.60 * calories) / 4
+		fats = (0.25 * calories) / 9
+		protein = max((0.15 * calories) / 4, protein_icmr)
+	
 	return {
 		"TDEE": round(calories),
 		"Protein": round(protein),
@@ -69,6 +127,8 @@ def get_targets(user_inputs):
 		"Fat": round(fats),
 		"BMI": round(bmi, 1),
 		"Calculated_TDEE": round(calculated_calories),
+		"Diabetes": diabetes,
+		"Hypertension": hypertension,
 	}
 
 
@@ -85,6 +145,9 @@ def load_dataset(file, region, preference):
 		df = df[df["Region"].str.lower().str.strip() == region.lower()]
 	if preference and preference.lower() == "veg":
 		df = df[df["Veg/Non-Veg"].str.lower().str.strip() == "veg"]
+	elif preference and preference.lower() == "nonveg":
+		df = df[df["Veg/Non-Veg"].str.lower().str.strip() == "non-veg"]
+	# For "both" preference, no filtering is applied (includes all items)
 	if df.empty:
 		df = _read_excel_cached(file_path).copy()
 	return df.reset_index(drop=True)
@@ -130,7 +193,8 @@ def generate_meal_combinations(df, meal_type, target_calories=None):
 					"bucket_id": f"{meal_type}_{idx}",
 					"norm_id": f"{row['Main']}|{row['Side']}",
 					"macros": {"Calories": cals, "Protein": prot, "Carbs": carb, "Fat": fat},
-					"calorie_match": calorie_match
+					"calorie_match": calorie_match,
+					"multiplier": mul
 				})
 		else:
 			for mul in multipliers:
@@ -151,7 +215,8 @@ def generate_meal_combinations(df, meal_type, target_calories=None):
 					"bucket_id": f"{meal_type}_{idx}",
 					"norm_id": f"{row['Base']}|{row['Subji']}|{row['Side']}",
 					"macros": {"Calories": cals, "Protein": prot, "Carbs": carb, "Fat": fat},
-					"calorie_match": calorie_match
+					"calorie_match": calorie_match,
+					"multiplier": mul
 				})
 	
 	# Sort combinations by calorie match to prioritize better matches
@@ -160,7 +225,7 @@ def generate_meal_combinations(df, meal_type, target_calories=None):
 
 
 
-def score_meal_plan(plan, targets, meal_split, macro_priority):
+def score_meal_plan(plan, targets, meal_split, macro_priority, cost_weight=0.0, carbon_weight=0.0):
 	if not plan or not plan.get("total_macros") or not plan.get("meals"):
 		return 0.0
 	
@@ -211,6 +276,19 @@ def score_meal_plan(plan, targets, meal_split, macro_priority):
 		act = plan["total_macros"].get(macro, 0)
 		s = 0.0 if tgt <= 0 else max(0.0, 1.0 - abs(act - tgt) / tgt)
 		total += macro_priority.get(macro, 1.0) * s * 0.5
+
+	# Optional cost and carbon footprint penalties (weights in [-1, 0])
+	cost = 0.0
+	carbon = 0.0
+	try:
+		cost = float(plan.get("total_cost", 0.0))
+		carbon = float(plan.get("total_carbon", 0.0))
+	except Exception:
+		cost = cost or 0.0
+		carbon = carbon or 0.0
+	# Add weighted terms (negative weights reduce score for higher cost/footprint)
+	total += float(cost_weight or 0.0) * cost
+	total += float(carbon_weight or 0.0) * carbon
 	
 	return total
 
@@ -220,7 +298,20 @@ def score_meal_plan(plan, targets, meal_split, macro_priority):
 
 
 
-def generate_genetic_algorithm_plans(bfast_combos, lunch_combos, dinner_combos, targets, meal_split, macro_priority, population_size=100, generations=50, top_n=100):
+def _accumulate_plan_extras(plan):
+	# Placeholder: accumulate cost/carbon if present at meal level
+	try:
+		meals = plan.get("meals", {})
+		cost = sum([meals[m].get("cost", 0.0) for m in ["breakfast", "lunch", "dinner"] if meals.get(m)])
+		carbon = sum([meals[m].get("carbon", 0.0) for m in ["breakfast", "lunch", "dinner"] if meals.get(m)])
+		plan["total_cost"] = cost
+		plan["total_carbon"] = carbon
+	except Exception:
+		plan["total_cost"] = plan.get("total_cost", 0.0)
+		plan["total_carbon"] = plan.get("total_carbon", 0.0)
+	return plan
+
+def generate_genetic_algorithm_plans(bfast_combos, lunch_combos, dinner_combos, targets, meal_split, macro_priority, population_size=100, generations=50, top_n=100, cost_weight=0.0, carbon_weight=0.0):
 	"""
 	Simplified Genetic Algorithm for meal planning:
 	- Population: Collection of meal plans
@@ -244,12 +335,13 @@ def generate_genetic_algorithm_plans(bfast_combos, lunch_combos, dinner_combos, 
 		}
 		
 		plan = {"meals": {"breakfast": b, "lunch": l, "dinner": d}, "total_macros": total_macros}
+		plan = _accumulate_plan_extras(plan)
 		population.append(plan)
 	
 	# Evolution loop
 	for generation in range(generations):
 		# Score all plans in current population
-		scored_population = [(score_meal_plan(plan, targets, meal_split, macro_priority), plan) for plan in population]
+		scored_population = [(score_meal_plan(plan, targets, meal_split, macro_priority, cost_weight, carbon_weight), plan) for plan in population]
 		scored_population.sort(key=lambda x: x[0], reverse=True)
 		
 		# Simplified Selection: Keep top 20 (elite) + take top 70 for breeding
@@ -303,7 +395,7 @@ def generate_genetic_algorithm_plans(bfast_combos, lunch_combos, dinner_combos, 
 					new_population[i]["meals"]["dinner"] = random.choice(dinner_combos)
 				
 				# Recalculate macros after mutation
-				new_population[i]["total_macros"] = {
+			new_population[i]["total_macros"] = {
 					"Calories": new_population[i]["meals"]["breakfast"]["macros"]["Calories"] + 
 							   new_population[i]["meals"]["lunch"]["macros"]["Calories"] + 
 							   new_population[i]["meals"]["dinner"]["macros"]["Calories"],
@@ -317,16 +409,17 @@ def generate_genetic_algorithm_plans(bfast_combos, lunch_combos, dinner_combos, 
 						   new_population[i]["meals"]["lunch"]["macros"]["Fat"] + 
 						   new_population[i]["meals"]["dinner"]["macros"]["Fat"],
 				}
+			new_population[i] = _accumulate_plan_extras(new_population[i])
 		
 		population = new_population
 	
 	# Return top N plans from final population
-	final_scored = [(score_meal_plan(plan, targets, meal_split, macro_priority), plan) for plan in population]
+	final_scored = [(score_meal_plan(plan, targets, meal_split, macro_priority, cost_weight, carbon_weight), plan) for plan in population]
 	final_scored.sort(key=lambda x: x[0], reverse=True)
 	
 	return [plan for score, plan in final_scored[:top_n]]
 
-def generate_plans(user_inputs, meal_split, macro_priority, num_restarts=8):
+def generate_plans(user_inputs, meal_split, macro_priority, num_restarts=8, fixed_meal_type=None, fixed_norm_id=None, fixed_multiplier=None, cost_weight=0.0, carbon_weight=0.0):
 	targets = get_targets(user_inputs)
 	bfast_target = (targets["TDEE"] * meal_split["breakfast"]) / 100
 	lunch_target = (targets["TDEE"] * meal_split["lunch"]) / 100
@@ -345,8 +438,27 @@ def generate_plans(user_inputs, meal_split, macro_priority, num_restarts=8):
 		b_combos = generate_meal_combinations(b_df, "breakfast", bfast_target)
 		l_combos = generate_meal_combinations(l_df, "lunch", lunch_target)
 		d_combos = generate_meal_combinations(d_df, "dinner", dinner_target)
+
+		# Apply fixed meal constraints if provided
+		if fixed_meal_type and fixed_norm_id:
+			try:
+				fixed_multiplier = float(fixed_multiplier) if fixed_multiplier is not None else 1.0
+			except Exception:
+				fixed_multiplier = 1.0
+			if fixed_meal_type == "breakfast":
+				filtered = [c for c in b_combos if c.get("norm_id") == fixed_norm_id and abs(c.get("multiplier", 1.0) - fixed_multiplier) < 1e-6]
+				if filtered:
+					b_combos = filtered
+			elif fixed_meal_type == "lunch":
+				filtered = [c for c in l_combos if c.get("norm_id") == fixed_norm_id and abs(c.get("multiplier", 1.0) - fixed_multiplier) < 1e-6]
+				if filtered:
+					l_combos = filtered
+			elif fixed_meal_type == "dinner":
+				filtered = [c for c in d_combos if c.get("norm_id") == fixed_norm_id and abs(c.get("multiplier", 1.0) - fixed_multiplier) < 1e-6]
+				if filtered:
+					d_combos = filtered
 		
-		plans = generate_genetic_algorithm_plans(b_combos, l_combos, d_combos, targets, meal_split, macro_priority, population_size=100, generations=50, top_n=200)
+		plans = generate_genetic_algorithm_plans(b_combos, l_combos, d_combos, targets, meal_split, macro_priority, population_size=100, generations=50, top_n=200, cost_weight=cost_weight, carbon_weight=carbon_weight)
 		all_plans.extend(plans)
 
 	# Sort by score but add some randomization for variety
@@ -432,6 +544,8 @@ def index():
 			"activity": request.form.get("activity"),
 			"region": request.form.get("region"),
 			"preference": request.form.get("preference"),
+			"diabetes": request.form.get("diabetes") == "yes",
+			"hypertension": request.form.get("hypertension") == "yes",
 			"daily_calories": daily_calories,
 	}
 		meal_split = {
@@ -442,13 +556,83 @@ def index():
 		macro_choice = (request.form.get("macro_focus") or "protein").lower()
 		macro_priority = MACRO_FOCUS_MAP.get(macro_choice, MACRO_FOCUS_MAP["protein"])
 
+		# Fixed meal controls (optional)
+		fixed_meal_type = (request.form.get("fixed_meal_type") or "").strip().lower() or None
+		fixed_norm_id = request.form.get("fixed_norm_id") or None
+		fixed_multiplier = request.form.get("fixed_multiplier") or None
+
+		# Read optional sustainability weights (default 0: no effect)
+		try:
+			cost_weight = float(request.form.get("cost_weight") or 0.0)
+			carbon_weight = float(request.form.get("carbon_weight") or 0.0)
+		except Exception:
+			cost_weight = 0.0
+			carbon_weight = 0.0
+
+		# If user wants to load options for a specific meal, compute and render without generating full plans
+		if action == "load_fixed_options" and fixed_meal_type:
+			# Build targets to know per-meal calorie target
+			targets_preview = get_targets(user_inputs)
+			bfast_target = (targets_preview["TDEE"] * meal_split["breakfast"]) / 100
+			lunch_target = (targets_preview["TDEE"] * meal_split["lunch"]) / 100
+			dinner_target = (targets_preview["TDEE"] * meal_split["dinner"]) / 100
+			# Load datasets and generate combos for the selected meal only
+			if fixed_meal_type == "breakfast":
+				df = load_dataset("Breakfast_Adjusted_Max.xlsx", user_inputs.get("region"), user_inputs.get("preference"))
+				df = filter_meal_candidates_by_calorie_window(df, "breakfast", bfast_target, 0.80)
+				combos = generate_meal_combinations(df, "breakfast", bfast_target)
+			elif fixed_meal_type == "lunch":
+				df = load_dataset("Lunch_Adjusted_Max.xlsx", user_inputs.get("region"), user_inputs.get("preference"))
+				df = filter_meal_candidates_by_calorie_window(df, "lunch", lunch_target, 0.80)
+				combos = generate_meal_combinations(df, "lunch", lunch_target)
+			else:
+				df = load_dataset("Dinner_Adjusted_Max.xlsx", user_inputs.get("region"), user_inputs.get("preference"))
+				df = filter_meal_candidates_by_calorie_window(df, "dinner", dinner_target, 0.80)
+				combos = generate_meal_combinations(df, "dinner", dinner_target)
+
+			# Reduce to unique options by norm_id for display; keep best label for each
+			seen = {}
+			for c in combos:
+				key = c.get("norm_id")
+				if key and key not in seen:
+					seen[key] = {"norm_id": key, "label": c.get("label"), "example_multiplier": c.get("multiplier", 1.0)}
+			fixed_options = list(seen.values())[:60]
+
+			return render_template("mealplan.html",
+								plan=None,
+								targets=targets_preview,
+								meal_macros=None,
+								user_inputs=user_inputs,
+								plan_index=0,
+								total_plans=0,
+								breakfast_pct=meal_split["breakfast"],
+								lunch_pct=meal_split["lunch"],
+								dinner_pct=meal_split["dinner"],
+								macro_focus=macro_choice,
+								meal_calorie_percentages=None,
+								show_all_plans=False,
+								all_plans=None,
+								current_date=datetime.now().strftime("%Y-%m-%d"),
+								error_message=None,
+								fixed_meal_type=fixed_meal_type,
+								fixed_options=fixed_options,
+								fixed_multiplier=fixed_multiplier)
+
 		# Validate
 		if not all([user_inputs["gender"], user_inputs["activity"], user_inputs["region"], user_inputs["preference"]]):
 			raise ValueError("Please complete all required fields.")
 		if sum(meal_split.values()) != 100 or any(v < 20 for v in meal_split.values()):
 			raise ValueError("Meal split must sum to 100% with each at least 20%.")
 
-		targets, plans = generate_plans(user_inputs, meal_split, macro_priority)
+		# Generate plans, applying fixed meal if provided
+		targets, plans = generate_plans(
+			user_inputs, meal_split, macro_priority,
+			fixed_meal_type=fixed_meal_type,
+			fixed_norm_id=fixed_norm_id,
+			fixed_multiplier=fixed_multiplier,
+			cost_weight=cost_weight,
+			carbon_weight=carbon_weight
+		)
 			
 	except Exception as e:
 		error_message = str(e)
@@ -520,6 +704,8 @@ def index():
 							lunch_pct=meal_split["lunch"],
 							dinner_pct=meal_split["dinner"],
 							macro_focus=macro_choice,
+								cost_weight=cost_weight,
+								carbon_weight=carbon_weight,
 							meal_calorie_percentages=meal_calorie_percentages,
 							show_all_plans=show_all_plans,
 							all_plans=plans if show_all_plans else None,
@@ -701,18 +887,90 @@ def generate_genetic_algorithm_plans_with_metrics(bfast_combos, lunch_combos, di
 	
 	return [plan for score, plan in final_scored[:top_n]], metrics
 
+def generate_genetic_algorithm_plans_seeded_with_metrics(bfast_combos, lunch_combos, dinner_combos, targets, meal_split, macro_priority, population_size=100, generations=50, top_n=100, max_seed_combinations=10000):
+	import time
+	start_time = time.time()
+	metrics = {'algorithm': 'genetic_seeded', 'execution_time': 0, 'fitness_evaluations': 0, 'population_size': population_size, 'generations': generations}
+
+	# 1) Score many combinations first (seed) using brute-force sampler
+	seed_plans, seed_metrics = generate_brute_force_plans(bfast_combos, lunch_combos, dinner_combos, targets, meal_split, macro_priority, max_combinations=max_seed_combinations)
+	metrics['seeded_from'] = seed_metrics
+
+	# 2) Build initial population from best seeds, then fill remainder with random variety
+	population = []
+	for score, plan in sorted([(score_meal_plan(p, targets, meal_split, macro_priority), p) for p in seed_plans], key=lambda x: x[0], reverse=True):
+		population.append(plan)
+		if len(population) >= min(population_size // 2, len(seed_plans)):
+			break
+	import random
+	while len(population) < population_size:
+		b = random.choice(bfast_combos)
+		l = random.choice(lunch_combos)
+		d = random.choice(dinner_combos)
+		total_macros = {
+			"Calories": b["macros"]["Calories"] + l["macros"]["Calories"] + d["macros"]["Calories"],
+			"Protein": b["macros"]["Protein"] + l["macros"]["Protein"] + d["macros"]["Protein"],
+			"Carbs": b["macros"]["Carbs"] + l["macros"]["Carbs"] + d["macros"]["Carbs"],
+			"Fat": b["macros"]["Fat"] + l["macros"]["Fat"] + d["macros"]["Fat"],
+		}
+		population.append({"meals": {"breakfast": b, "lunch": l, "dinner": d}, "total_macros": total_macros})
+
+	# 3) GA loop (same as metrics GA)
+	for generation in range(generations):
+		scored_population = [(score_meal_plan(plan, targets, meal_split, macro_priority), plan) for plan in population]
+		scored_population.sort(key=lambda x: x[0], reverse=True)
+		metrics['fitness_evaluations'] += len(population)
+		elite = [plan for score, plan in scored_population[:20]]
+		breeders = [plan for score, plan in scored_population[:70]]
+		new_population = elite.copy()
+		while len(new_population) < population_size:
+			parent1 = random.choice(breeders)
+			parent2 = random.choice(breeders)
+			child = {"meals": {"breakfast": parent1["meals"]["breakfast"], "lunch": parent2["meals"]["lunch"], "dinner": parent1["meals"]["dinner"]}}
+			child["total_macros"] = {
+				"Calories": child["meals"]["breakfast"]["macros"]["Calories"] + child["meals"]["lunch"]["macros"]["Calories"] + child["meals"]["dinner"]["macros"]["Calories"],
+				"Protein": child["meals"]["breakfast"]["macros"]["Protein"] + child["meals"]["lunch"]["macros"]["Protein"] + child["meals"]["dinner"]["macros"]["Protein"],
+				"Carbs": child["meals"]["breakfast"]["macros"]["Carbs"] + child["meals"]["lunch"]["macros"]["Carbs"] + child["meals"]["dinner"]["macros"]["Carbs"],
+				"Fat": child["meals"]["breakfast"]["macros"]["Fat"] + child["meals"]["lunch"]["macros"]["Fat"] + child["meals"]["dinner"]["macros"]["Fat"],
+			}
+			new_population.append(child)
+		for i in range(20, len(new_population)):
+			if random.random() < 0.05:
+				meal_type = random.choice(["breakfast", "lunch", "dinner"])
+				if meal_type == "breakfast": new_population[i]["meals"]["breakfast"] = random.choice(bfast_combos)
+				elif meal_type == "lunch": new_population[i]["meals"]["lunch"] = random.choice(lunch_combos)
+				else: new_population[i]["meals"]["dinner"] = random.choice(dinner_combos)
+				new_population[i]["total_macros"] = {
+					"Calories": new_population[i]["meals"]["breakfast"]["macros"]["Calories"] + new_population[i]["meals"]["lunch"]["macros"]["Calories"] + new_population[i]["meals"]["dinner"]["macros"]["Calories"],
+					"Protein": new_population[i]["meals"]["breakfast"]["macros"]["Protein"] + new_population[i]["meals"]["lunch"]["macros"]["Protein"] + new_population[i]["meals"]["dinner"]["macros"]["Protein"],
+					"Carbs": new_population[i]["meals"]["breakfast"]["macros"]["Carbs"] + new_population[i]["meals"]["lunch"]["macros"]["Carbs"] + new_population[i]["meals"]["dinner"]["macros"]["Carbs"],
+					"Fat": new_population[i]["meals"]["breakfast"]["macros"]["Fat"] + new_population[i]["meals"]["lunch"]["macros"]["Fat"] + new_population[i]["meals"]["dinner"]["macros"]["Fat"],
+				}
+		population = new_population
+
+	final_scored = [(score_meal_plan(plan, targets, meal_split, macro_priority), plan) for plan in population]
+	final_scored.sort(key=lambda x: x[0], reverse=True)
+	metrics['execution_time'] = time.time() - start_time
+	metrics['best_score'] = final_scored[0][0] if final_scored else 0
+	best_plan = final_scored[0][1] if final_scored else None
+	accuracy_metrics = calculate_accuracy_metrics(best_plan, targets, meal_split) if best_plan else {}
+	metrics['accuracy_metrics'] = accuracy_metrics
+	return [plan for score, plan in final_scored[:top_n]], metrics
+
 def compare_algorithms(bfast_combos, lunch_combos, dinner_combos, targets, meal_split, macro_priority):
 	print("Running algorithm comparison...")
 	
 	brute_plans, brute_metrics = generate_brute_force_plans(bfast_combos, lunch_combos, dinner_combos, targets, meal_split, macro_priority)
 	genetic_plans, genetic_metrics = generate_genetic_algorithm_plans_with_metrics(bfast_combos, lunch_combos, dinner_combos, targets, meal_split, macro_priority)
+	seeded_plans, seeded_metrics = generate_genetic_algorithm_plans_seeded_with_metrics(bfast_combos, lunch_combos, dinner_combos, targets, meal_split, macro_priority)
 	
 	comparison = {
 		'brute_force': brute_metrics,
 		'genetic': genetic_metrics,
+		'genetic_seeded': seeded_metrics,
 		'summary': {
-			'fastest': min([(brute_metrics['execution_time'], 'brute_force'), (genetic_metrics['execution_time'], 'genetic')], key=lambda x: x[0])[1],
-			'best_score': max([(brute_metrics['best_score'], 'brute_force'), (genetic_metrics['best_score'], 'genetic')], key=lambda x: x[0])[1],
+			'fastest': min([(brute_metrics['execution_time'], 'brute_force'), (genetic_metrics['execution_time'], 'genetic'), (seeded_metrics['execution_time'], 'genetic_seeded')], key=lambda x: x[0])[1],
+			'best_score': max([(brute_metrics['best_score'], 'brute_force'), (genetic_metrics['best_score'], 'genetic'), (seeded_metrics['best_score'], 'genetic_seeded')], key=lambda x: x[0])[1],
 		}
 	}
 	
@@ -725,6 +983,7 @@ def compare_algorithms(bfast_combos, lunch_combos, dinner_combos, targets, meal_
 	
 	comparison['brute_force']['best_plan'] = brute_plans[0] if brute_plans else None
 	comparison['genetic']['best_plan'] = genetic_plans[0] if genetic_plans else None
+	comparison['genetic_seeded']['best_plan'] = seeded_plans[0] if seeded_plans else None
 	
 	return comparison
 
@@ -744,6 +1003,8 @@ def compare_algorithms_route():
 			"activity": request.form.get("activity"),
 			"region": request.form.get("region"),
 			"preference": request.form.get("preference"),
+			"diabetes": request.form.get("diabetes") == "yes",
+			"hypertension": request.form.get("hypertension") == "yes",
 		}
 		meal_split = {
 			"breakfast": int(request.form.get("breakfast_pct")),
